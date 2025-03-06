@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import conectDB from './config/conectDB.js';
 dotenv.config();
 
 const app = express();
@@ -22,11 +22,12 @@ app.get('/', (req, res) => {
     res.send('API is running');
 });
 
+conectDB();
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`));
-// mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => 
-//     .catch((error) => console.log(`${error} did not connect`));
+
+
 
 
