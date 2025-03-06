@@ -30,7 +30,27 @@ export async function registerUser(request, response) {
     const newUser = new UserModel({ name, email, password: hashedPassword });
     await newUser.save();
 
-   
+  const verifyEmailUrl  = `${process.env.FRONTE_URL}/verify-email?code=${save?._id}`
+     
+    const verifyEmail = await sendEmail({
+
+    
+      email: email, 
+      subject: "Verify email from Mynstro", 
+      html:verifyEmailTemplate({
+        email: email,
+        url: verifyEmailUrl
+      })
+
+  });
+
+  return response.json({
+    message: "User registered successfully",
+    error: false,
+    success: true,
+    data : newUser,
+  });
+      
     
   } catch (error) {
     response.status(500).json({
