@@ -9,11 +9,11 @@ if(!process.env.RESEND_API){
 
 const resend = new Resend(process.env.RESEND_API);
 
-const seneEmail = async (sendTo, subject, html) => {
+const sendEmail = async (email, subject, html) => {
     try {
         const { data, error } = await resend.emails.send({
             from: 'Mynstro <onboarding@resend.dev>',
-            to: [sendTo],
+            to: email,
             subject: subject,
             html: html,
           });
@@ -25,4 +25,4 @@ const seneEmail = async (sendTo, subject, html) => {
     }
     
 }
-export default seneEmail;
+export default sendEmail;

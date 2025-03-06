@@ -1,65 +1,59 @@
-import UserModel from "../models/user.model";
-import bcrypt from "bcrypt";
+import UserModel from "../models/user.model.js";
+import bcryptjs from "bcryptjs";
+import sendEmail from '../config/sendEmail.js';
+import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js'
 
 export async function registerUser(request, response) {
   try {
     const { name, email, password } = request.body;
 
     if (!name || !email || !password) {
-      response.status(400).json({
+      return response.status(400).json({
         message: "Please fill all fields",
         error: true,
         success: false,
-      })
+      });
     }
 
     const user = await UserModel.findOne({ email });
 
-
     if (user) {
-      response.status(400).json({
+      return response.status(400).json({
         message: "User already exists",
         error: true,
         success: false,
-      })
+      });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
 
     const newUser = new UserModel({ name, email, password: hashedPassword });
-    await newUser.save();
+    const save = await newUser.save();   
 
-  const verifyEmailUrl  = `${process.env.FRONTE_URL}/verify-email?code=${save?._id}`
-     
-    const verifyEmail = await sendEmail({
+    const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save._id}`;
 
-    
-      email: email, 
-      subject: "Verify email from Mynstro", 
-      html:verifyEmailTemplate({
-        email: email,
+    await sendEmail({
+      email: request.body.email,
+      subject: "Verify email from Mynstro",
+      html: verifyEmailTemplate({
+        email: request.body.email,
         url: verifyEmailUrl
       })
+    });
 
-  });
+    return response.json({
+      message: "User registered successfully",
+      error: false,
+      success: true,
+      data: newUser,
+    });
 
-  return response.json({
-    message: "User registered successfully",
-    error: false,
-    success: true,
-    data : newUser,
-  });
-      
-    
   } catch (error) {
-    response.status(500).json({
+    return response.status(500).json({
       message: error.message || "Error registering user",
       error: true,
       success: false,
-
-    })
-
-    
+    });
   }
 }
