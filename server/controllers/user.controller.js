@@ -30,7 +30,7 @@ export async function registerUser(request, response) {
     const newUser = new UserModel({ name, email, password: hashedPassword });
     await newUser.save();
 
-  
+   
     
   } catch (error) {
     response.status(500).json({
