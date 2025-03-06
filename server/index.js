@@ -22,11 +22,13 @@ app.get('/', (req, res) => {
     res.send('API is running');
 });
 
-conectDB();
-
-
-const PORT = process.env.PORT || 5000;
+conectDB().then(() => {
+    const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`));
+}).catch((err) => { console.log(err.message)
+})
+
+
 
 
 
