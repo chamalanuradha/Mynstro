@@ -25,12 +25,10 @@ const userSchema = new mongoose.Schema({
     
     forget_password_otp: { type: String, default: ''},
     forget_password_expiry: { type: Date, default:'' },
-    role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    role: { type: String, enum: ["USER", "ADMIN"], default: "USER" }
 }, {
     timestamps: true
 });
 
-const User = mongoose.model("User", userSchema);
-export default User;
+const UserModel = mongoose.model("User", userSchema);
+export default UserModel;
