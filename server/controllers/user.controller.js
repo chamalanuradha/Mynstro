@@ -37,7 +37,7 @@ export async function registerUser(request, response) {
       sendTo: email,
       subject: "Verify email from Mynstro",
       html: verifyEmailTemplate({
-        email: request.body.email,
+        name: name,
         url: verifyEmailUrl
       })
     });
