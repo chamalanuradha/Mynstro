@@ -34,7 +34,7 @@ export async function registerUser(request, response) {
     const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save._id}`;
 
     await sendEmail({
-      email: request.body.email,
+      sendTo: email,
       subject: "Verify email from Mynstro",
       html: verifyEmailTemplate({
         email: request.body.email,
