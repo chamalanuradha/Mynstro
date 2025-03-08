@@ -2,6 +2,8 @@ import UserModel from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import sendEmail from '../config/sendEmail.js';
 import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js'
+import dotenv from 'dotenv';
+dotenv.config();
 
 export async function registerUser(request, response) {
   try {
@@ -32,6 +34,8 @@ export async function registerUser(request, response) {
     const save = await newUser.save();   
 
     const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save._id}`;
+
+    console.log(verifyEmailUrl);
 
     await sendEmail({
       sendTo: email,
