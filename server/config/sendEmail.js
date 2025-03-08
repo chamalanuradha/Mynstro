@@ -10,7 +10,6 @@ if(!process.env.RESEND_API){
 const resend = new Resend(process.env.RESEND_API);
 
 const sendEmail = async ({ sendTo, subject, html }) => {
-    console.log('send email', sendTo);
     try {
         const { data, error } = await resend.emails.send({
             from: 'Mynstro <onboarding@resend.dev>',

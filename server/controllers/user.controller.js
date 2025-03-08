@@ -35,7 +35,7 @@ export async function registerUser(request, response) {
 
     const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save._id}`;
 
-    console.log(verifyEmailUrl);
+
 
     await sendEmail({
       sendTo: email,
