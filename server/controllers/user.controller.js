@@ -5,12 +5,12 @@ import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js'
 import dotenv from 'dotenv';
 dotenv.config();
 
-export async function registerUser(request, response) {
+export async function registerUser(req, res) {
   try {
-    const { name, email, password } = request.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return response.status(400).json({
+      return res.status(400).json({
         message: "Please fill all fields",
         error: true,
         success: false,
@@ -20,7 +20,7 @@ export async function registerUser(request, response) {
     const user = await UserModel.findOne({ email });
 
     if (user) {
-      return response.status(400).json({
+      return res.status(400).json({
         message: "User already exists",
         error: true,
         success: false,
@@ -46,7 +46,7 @@ export async function registerUser(request, response) {
       })
     });
 
-    return response.json({
+    return res.json({
       message: "User registered successfully",
       error: false,
       success: true,
@@ -54,10 +54,42 @@ export async function registerUser(request, response) {
     });
 
   } catch (error) {
-    return response.status(500).json({
+    return res.status(500).json({
       message: error.message || "Error registering user",
       error: true,
       success: false,
     });
   }
+}
+
+export async function verifyEmail(req, res) {
+  try {
+    const { code } = req.query;
+
+    const user = await UserModel.findOne({ _id: code });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid verification code",
+        error: true,
+        success: false,
+      });
+    }
+
+    user.verify_email = true;
+    await user.save();
+
+    return res.json({
+      message: "Email verified successfully",
+      error: false,
+      success: true,
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error verifying email",
+      error: true,
+      success: false,
+    });
+  }  
 }
