@@ -1,7 +1,9 @@
 import UserModel from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import sendEmail from '../config/sendEmail.js';
-import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js'
+import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js';
+import genarateRefreshToken  from '../utils/refreshToken.js';
+import  genarateAccessToken  from '../utils/accessToken.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -125,10 +127,18 @@ export async function login(req, res) {
       });
     }
 
+    const accesstoken = await genarateAccessToken(user._id);
+    const refreshToken = await genarateRefreshToken(user._id);
+
     return res.json({
       message: "Login successful",
       error: false,
       success: true,
+      data: {
+        accesstoken,
+        refreshToken,
+        user
+      }
     })
     } catch (error) {
     return res.status(500).json({

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import UserModel from '../models/user.model';
+import UserModel from '../models/user.model.js';
 dotenv.config();
 
 const genarateRefreshToken = async (userId) => {
@@ -12,6 +12,7 @@ const genarateRefreshToken = async (userId) => {
     const  updateToken = await UserModel.updateOne(
         { _id: userId }, 
         { refreshToken: token })
+
     return token
 
 }
