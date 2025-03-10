@@ -100,6 +100,14 @@ export async function login(req, res) {
   try {
     const { email, password } = req.body;
 
+    if(!email || !password){
+      return res.status(400).json({
+        message: "Please provide email and password",
+        error: true,
+        success: false,
+      });
+    }
+
     const user = await UserModel.findOne({ email });
 
     if (!user) {
