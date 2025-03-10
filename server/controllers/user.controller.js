@@ -93,3 +93,48 @@ export async function verifyEmail(req, res) {
     });
   }  
 }
+
+export async function login(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+        error: true,
+        success: false,
+      });
+    }
+
+    if(user.status !== 'Active'){
+      return res.status(400).json({
+        message: "Your account is not active. Please contact the administrator",
+        error: true,
+        success: false,
+      })
+    }
+
+    const isPasswordValid = await bcryptjs.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+        error: true,
+        success: false,
+      });
+    }
+
+    return res.json({
+      message: "Login successful",
+      error: false,
+      success: true,
+    })
+    } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error logging in",
+      error: true,
+      success: false,
+    });
+    }
+}
