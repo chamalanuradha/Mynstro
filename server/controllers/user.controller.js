@@ -203,3 +203,28 @@ const {userid} = req.userId;
     
   }
 }
+
+export async function uploadAvatar(req,res){
+  try {
+    const image = req.file;
+    
+
+    const user = await UserModel.findOneAndUpdate(userid,{
+      avatar
+    });
+
+    return res.json({
+      message: "Avatar uploaded successfully",
+      error: false,
+      success: true,
+      data: user
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error uploading avatar",
+      error: true,
+      success: false,
+    })
+
+  }
+}
