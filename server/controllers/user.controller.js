@@ -138,6 +138,16 @@ export async function login(req, res) {
     const accesstoken = await genarateAccessToken(user._id);
     const refreshToken = await genarateRefreshToken(user._id);
 
+    const cookiesOption = {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'none',
+      secure: true
+    }
+
+    res.cookie('refreshToken', refreshToken, cookiesOption);
+    res.cookie('accesstoken', accesstoken, cookiesOption);
+
     return res.json({
       message: "Login successful",
       error: false,
@@ -155,4 +165,23 @@ export async function login(req, res) {
       success: false,
     });
     }
+}
+
+export async function logout(req,res){
+  try {
+    res.clearCookie('refreshToken');
+    res.clearCookie('accesstoken');
+    return res.json({
+      message: "Logout successful",
+      error: false,
+      success: true,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error logging out",
+      error: true,
+      success: false,
+    })
+    
+  }
 }
