@@ -5,6 +5,7 @@ import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js';
 import genarateRefreshToken  from '../utils/refreshToken.js';
 import  genarateAccessToken  from '../utils/accessToken.js';
 import dotenv from 'dotenv';
+import uploadImageCloudinary from "../utils/uploadImageCloudinary.js";
 dotenv.config();
 
 export async function registerUser(req, res) {
@@ -209,9 +210,14 @@ export async function uploadAvatar(req,res){
     const image = req.file;
     
 
-    const user = await UserModel.findOneAndUpdate(userid,{
-      avatar
-    });
+  const uploadAvatar = await uploadImageCloudinary(image);
+
+  return res.status(200).json({
+    message: "Avatar uploaded successfully",
+    error: false,
+    success: true,
+    data: uploadAvatar
+  })
 
     return res.json({
       message: "Avatar uploaded successfully",
