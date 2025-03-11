@@ -5,10 +5,12 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import conectDB from './config/conectDB.js';
+import cookieParser from "cookie-parser";
 import userRouter from './route/user.route.js';
 dotenv.config();
 
 const app = express();
+app.use(cookieParser());
 app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL

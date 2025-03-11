@@ -144,7 +144,6 @@ export async function login(req, res) {
 
     const cookiesOption = {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
       sameSite: 'none',
       secure: true
     }
@@ -173,8 +172,23 @@ export async function login(req, res) {
 
 export async function logout(req,res){
   try {
-    res.clearCookie('refreshToken');
-    res.clearCookie('accesstoken');
+const {userid} = req.userId;
+
+ console.log(userid)
+
+    const cookiesOption = {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true
+    }
+
+    res.clearCookie('refreshToken',cookiesOption);
+    res.clearCookie('accesstoken',cookiesOption);
+
+    const removeRefreshToken = await UserModel.findOneAndUpdate(userid,{
+      refresh_token:""
+    });
+
     return res.json({
       message: "Logout successful",
       error: false,
