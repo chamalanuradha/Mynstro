@@ -138,6 +138,10 @@ export async function login(req, res) {
     const accesstoken = await genarateAccessToken(user._id);
     const refreshToken = await genarateRefreshToken(user._id);
 
+     
+      user.refresh_token = refreshToken;
+      await user.save();
+
     const cookiesOption = {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
