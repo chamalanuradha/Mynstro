@@ -6,6 +6,7 @@ import genarateRefreshToken  from '../utils/refreshToken.js';
 import  genarateAccessToken  from '../utils/accessToken.js';
 import dotenv from 'dotenv';
 import uploadImageCloudinary from "../utils/uploadImageCloudinary.js";
+import generateOTP from "../utils/genarateOTP.js";
 dotenv.config();
 
 export async function registerUser(req, res) {
@@ -277,6 +278,26 @@ export async function forgetPassword(req, res) {
         success: false,
       });
     }
+
+    const forget_password_otp = generateOTP();
+    const forget_password_expiry = new Date + 60 * 60 * 1000;
+
+    const updateuser = await UserModel.findByIdAndUpdate(user._id, {
+      forget_password_otp,
+      forget_password_expiry,
+    });
+
+    const updateduser = await UserModel.findOneAndUpdate(user._id);
+
+    return res.status(200).json({
+      message: "Reset password link sent successfully",
+      error: false,
+      success: true,
+      data: updateduser
+      
+    }
+    )
+
     
 } catch (error) {
     return res.status(500).json({
