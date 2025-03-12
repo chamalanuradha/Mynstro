@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {registerUser, verifyEmail, login, logout, uploadAvatar} from "../controllers/user.controller.js";
+import {registerUser, verifyEmail, login, logout, uploadAvatar, updateUser} from "../controllers/user.controller.js";
 import auth from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
 
@@ -10,5 +10,7 @@ userRouter.post('/verifyemail', verifyEmail);
 userRouter.post('/login', login);
 userRouter.get('/logout', auth, logout );
 userRouter.put('/upload-avatar', auth, upload.single('avatar'), uploadAvatar);
+userRouter.put('/updateuser', auth, updateUser)
+
 
 export default userRouter;

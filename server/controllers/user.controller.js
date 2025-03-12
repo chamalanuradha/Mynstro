@@ -248,18 +248,13 @@ export async function updateUser(req, res) {
       password,
       mobile,
     });
+    const updateduser = await UserModel.findOneAndUpdate(userid);
 
     return res.status(200).json({
       message: "User updated successfully",
       error: false,
       success: true,
-      data: {
-        userid: req.userId,
-        name,
-        email,
-        password,
-        phone,
-      },
+      data: updateduser
     });
   } catch (error) {
     return res.status(500).json({
