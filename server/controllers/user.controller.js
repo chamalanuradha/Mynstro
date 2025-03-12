@@ -175,7 +175,6 @@ export async function logout(req,res){
   try {
 const {userid} = req.userId;
 
- console.log(userid)
 
     const cookiesOption = {
       httpOnly: true,
@@ -222,7 +221,10 @@ export async function uploadAvatar(req,res){
     message: "Avatar uploaded successfully",
     error: false,
     success: true,
-    data: uploadAvatar
+    data: {
+      userid: req.userId,
+      avatar: uploadAvatar.url
+    }
   })
 
   } catch (error) {
