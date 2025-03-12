@@ -265,3 +265,24 @@ export async function updateUser(req, res) {
   })
 }
 }
+
+export async function forgetPassword(req, res) {
+  try {
+    const { email } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        message: "Email is not found",
+        error: true,
+        success: false,
+      });
+    }
+    
+} catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error sending reset password link",
+      error: true,
+      success: false,
+    });
+  }
+}
