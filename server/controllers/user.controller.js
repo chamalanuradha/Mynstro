@@ -236,3 +236,37 @@ export async function uploadAvatar(req,res){
 
   }
 }
+
+export async function updateUser(req, res) {
+  try {
+    const { userid } = req.userId;
+    const { name, email, password, mobile } = req.body;
+
+    const updateuser = await UserModel.findOneAndUpdate(userid, {
+      name,
+      email,
+      password,
+      mobile,
+    });
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      error: false,
+      success: true,
+      data: {
+        userid: req.userId,
+        name,
+        email,
+        password,
+        phone,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error updating user",
+      error: true,
+      success: false,
+    
+  })
+}
+}
