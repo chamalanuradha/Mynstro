@@ -284,7 +284,7 @@ export async function forgetPassword(req, res) {
 
     const updateuser = await UserModel.findByIdAndUpdate(user._id, {
       forget_password_otp,
-      forget_password_expiry,
+      forget_password_expiry: new Date(forget_password_expiry).toISOString(),
     });
 
     const updateduser = await UserModel.findOneAndUpdate(user._id);
