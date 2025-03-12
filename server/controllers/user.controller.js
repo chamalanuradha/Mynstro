@@ -207,10 +207,16 @@ const {userid} = req.userId;
 
 export async function uploadAvatar(req,res){
   try {
+    const {userid} = req.userId;
     const image = req.file;
     
 
   const uploadAvatar = await uploadImageCloudinary(image);
+  const updateAvatar = await UserModel.findOneAndUpdate(userid,{
+    avatar: uploadAvatar.url
+  })
+
+
 
   return res.status(200).json({
     message: "Avatar uploaded successfully",
@@ -219,12 +225,6 @@ export async function uploadAvatar(req,res){
     data: uploadAvatar
   })
 
-    return res.json({
-      message: "Avatar uploaded successfully",
-      error: false,
-      success: true,
-      data: user
-    })
   } catch (error) {
     return res.status(500).json({
       message: error.message || "Error uploading avatar",
