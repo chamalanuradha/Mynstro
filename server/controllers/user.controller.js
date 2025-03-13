@@ -244,10 +244,13 @@ export async function updateUser(req, res) {
     const { userid } = req.userId;
     const { name, email, password, mobile } = req.body;
 
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
+
     const updateuser = await UserModel.findOneAndUpdate(userid, {
       name,
       email,
-      password,
+      password : hashedPassword,
       mobile,
     });
     const updateduser = await UserModel.findOneAndUpdate(userid);
