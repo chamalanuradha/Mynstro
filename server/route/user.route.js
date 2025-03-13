@@ -9,7 +9,7 @@ userRouter.post('/register', registerUser);
 userRouter.post('/verifyemail', verifyEmail);
 userRouter.post('/login', login);
 userRouter.get('/logout', auth, logout );
-userRouter.put('/upload-avatar', auth, upload.single('avatar'), uploadAvatar);
+userRouter.put('/uploadavatar', auth, upload.single('avatar'), uploadAvatar);
 userRouter.put('/updateuser', auth, updateUser);
 userRouter.put('/forgotpassword', auth, forgetPassword);
 

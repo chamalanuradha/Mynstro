@@ -2,6 +2,7 @@ import UserModel from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import sendEmail from '../config/sendEmail.js';
 import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js';
+import forgotPasswordTemplate from '../utils/forgotPasswordTemplate.js';
 import genarateRefreshToken  from '../utils/refreshToken.js';
 import  genarateAccessToken  from '../utils/accessToken.js';
 import dotenv from 'dotenv';
@@ -287,17 +288,20 @@ export async function forgetPassword(req, res) {
       forget_password_expiry: new Date(forget_password_expiry).toISOString(),
     });
 
+    const updateduser = await UserModel.findOne( user._id);
+
+    console.log(updateduser);
     await sendEmail({
-      to: email,
+      sendTo: email,
       subject: "forgot Password OTP from Mynstro",
-      html: verifyEmailTemplate({
-        name: name,
-        otp: forget_password_otp,
+      html: forgotPasswordTemplate({
+        name: updateduser.name,
+        otp: updateduser.forget_password_otp,
       })
     });
 
     return res.status(200).json({
-      message: "Reset password link sent successfully",
+      message: "Check your email for reset password OTP",
       error: false,
       success: true
     });
