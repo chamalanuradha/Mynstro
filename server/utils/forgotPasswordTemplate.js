@@ -4,7 +4,10 @@ const forgotPasswordTemplate = ({ name, otp }) => {
         <p style="margin: 0 0 20px;">Hi ${name},</p>
         <p style="margin: 0 0 20px;">We received a request to reset your password. Use the OTP below to proceed with resetting your password:</p>
         
-        <h2 style="margin: 0 0 20px; text-align: center; font-size: 24px; color: #007bff;">${otp}</h2>
+        <h2 style="margin: 0 0 20px; padding : 20px; text-align: center; font-size: 24px; background-color: gray; color: black;">
+  ${otp}
+</h2>
+
 
         <p style="margin: 0 0 20px;"><strong>Note:</strong> This OTP is valid for only <strong>1 hour</strong>.</p>
 
