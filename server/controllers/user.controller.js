@@ -318,3 +318,39 @@ export async function forgetPassword(req, res) {
     });
   }
 }
+
+export async function verifyOTP(req, res) {
+  try {
+    const { email, otp } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Email is not found",
+        error: true,
+        success: false,
+      });
+    }
+
+    if (user.forget_password_otp !== otp) {
+      return res.status(400).json({
+        message: "Invalid OTP",
+        error: true,
+        success: false,
+      });
+    }
+  
+  return res.status(200).json({
+    message: "OTP verified successfully",
+    error: false,
+    success: true,
+  })
+} catch (error) {
+  return res.status(500).json({
+    message: error.message || "Error verifying OTP",
+    error: true,
+    success: false,
+  });
+}
+}
