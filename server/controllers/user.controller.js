@@ -359,6 +359,14 @@ export async function resetPassword(req, res) {
   try {
     const { email, newPassword, confirmPassword } = req.body;
 
+    if(!email || !newPassword || !confirmPassword) {
+      return res.status(400).json({
+        message: "Please fill all the fields",
+        error: true,
+        success: false,
+      })
+    }
+
     const user = await UserModel.findOne({ email });
 
     if (!user) {
