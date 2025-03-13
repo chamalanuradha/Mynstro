@@ -354,3 +354,47 @@ export async function verifyOTP(req, res) {
   });
 }
 }
+
+export async function resetPassword(req, res) {
+  try {
+    const { email, newPassword, confirmPassword } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Email is not found",
+        error: true,
+        success: false,
+      });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        message: "New password and confirm password do not match",
+        error: true,
+        success: false,
+      });
+    }
+
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(newPassword, salt);
+  
+    const update = await UserModel.findOneAndUpdate (usee._id,{
+      password: hashedPassword
+    })
+
+
+    return res.status(200).json({
+      message: "Password reset successfully",
+      error: false,
+      success: true,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error resetting password",
+      error: true,
+      success: false,
+    });
+  }
+}
