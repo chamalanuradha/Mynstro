@@ -287,16 +287,23 @@ export async function forgetPassword(req, res) {
       forget_password_expiry: new Date(forget_password_expiry).toISOString(),
     });
 
-    const updateduser = await UserModel.findOneAndUpdate(user._id);
+    await sendEmail({
+      to: email,
+      subject: "forgot Password OTP from Mynstro",
+      html: verifyEmailTemplate({
+        name: name,
+        otp: forget_password_otp,
+      })
+    });
 
     return res.status(200).json({
       message: "Reset password link sent successfully",
       error: false,
-      success: true,
-      data: updateduser
-      
-    }
-    )
+      success: true
+    });
+
+   
+    
 
     
 } catch (error) {
