@@ -210,6 +210,14 @@ export async function uploadAvatar(req,res){
   try {
     const {userid} = req.userId;
     const image = req.file;
+
+    if(!image){
+      return res.status(400).json({
+        message: "No image uploaded",
+        error: true,
+        success: false,
+      })
+    }
     
 
   const uploadAvatar = await uploadImageCloudinary(image);
@@ -274,6 +282,13 @@ export async function updateUser(req, res) {
 export async function forgetPassword(req, res) {
   try {
     const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({
+        message: "Email is required",
+        error: true,
+        success: false,
+      });
+    }
     const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(404).json({
@@ -325,6 +340,14 @@ export async function forgetPassword(req, res) {
 export async function verifyOTP(req, res) {
   try {
     const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({
+        message: "Email and OTP are required",
+        error: true,
+        success: false,
+      });
+    }
 
     const user = await UserModel.findOne({ email });
 
