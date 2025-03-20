@@ -432,3 +432,24 @@ export async function resetPassword(req, res) {
     });
   }
 }
+
+export async function refreshToken(req, res) {
+  try {
+    const refreshToken = req.cookies.refreshToken || req.headers.authorization.split(" ")[1];
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Refresh token is required",
+        error: true,
+        success: false,
+      });
+    }
+    console.log(refreshToken)
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error refreshing token",
+      error: true,
+      success: false,
+    });
+  }
+    }
