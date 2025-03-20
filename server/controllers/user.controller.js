@@ -445,38 +445,37 @@ export async function refreshToken(req, res) {
         success: false,
       });
     }
-    const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-    if (!verifyToken) {
+    const verifyToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    if (!verifyToken || !verifyToken.userId) {
       return res.status(401).json({
         message: "Invalid refresh token",
         error: true,
         success: false,
       });
     }
-    const user = verifyToken._id;
 
-    const newAccessToken = genarateAccessToken(user);
+    const user = verifyToken.userId;  
+    console.log("User ID from token:", user); 
 
-    console.log(newAccessToken)
-
-    
+    const newAccessToken = await genarateAccessToken(user);  
     const cookiesOption = {
       httpOnly: true,
       sameSite: 'none',
-      secure: true
-    }
+      secure: true,
+    };
 
-    res.cookie('accesstoken', newAccessToken, cookiesOption);
+    res.cookie('accessToken', newAccessToken, cookiesOption);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Token refreshed successfully",
       error: false,
       success: true,
-      data: newAccessToken
-    })
-
-
+      data: {
+        accessToken: newAccessToken, 
+      }
+    });
 
   } catch (error) {
     return res.status(500).json({
@@ -485,4 +484,5 @@ export async function refreshToken(req, res) {
       success: false,
     });
   }
-    }
+}
+
