@@ -8,6 +8,7 @@ import  genarateAccessToken  from '../utils/accessToken.js';
 import dotenv from 'dotenv';
 import uploadImageCloudinary from "../utils/uploadImageCloudinary.js";
 import generateOTP from "../utils/genarateOTP.js";
+import jwt from "jsonwebtoken";
 dotenv.config();
 
 export async function registerUser(req, res) {
@@ -435,7 +436,7 @@ export async function resetPassword(req, res) {
 
 export async function refreshToken(req, res) {
   try {
-    const refreshToken = req.cookies.refreshToken || req.headers.authorization.split(" ")[1];
+    const refreshToken = req.cookies.refreshToken || req.headers?.authorization?.split(" ")[1];
 
     if (!refreshToken) {
       return res.status(401).json({
@@ -444,7 +445,39 @@ export async function refreshToken(req, res) {
         success: false,
       });
     }
-    console.log(refreshToken)
+    const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+    if (!verifyToken) {
+      return res.status(401).json({
+        message: "Invalid refresh token",
+        error: true,
+        success: false,
+      });
+    }
+    const user = verifyToken._id;
+
+    const newAccessToken = genarateAccessToken(user);
+
+    console.log(newAccessToken)
+
+    
+    const cookiesOption = {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true
+    }
+
+    res.cookie('accesstoken', newAccessToken, cookiesOption);
+
+    res.status(200).json({
+      message: "Token refreshed successfully",
+      error: false,
+      success: true,
+      data: newAccessToken
+    })
+
+
+
   } catch (error) {
     return res.status(500).json({
       message: error.message || "Error refreshing token",
