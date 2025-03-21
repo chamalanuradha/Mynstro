@@ -33,7 +33,7 @@ function Header() {
           <TypeAnimation
             sequence={[
               'Search products...',
-              1000, // Wait 1 second after typing
+              1000, 
               'Find the best deals...',
               1000,
               'Shop top categories...',
@@ -43,8 +43,8 @@ function Header() {
               'Explore trending items...',
               1000
             ]}
-            speed={50} // Typing speed
-            repeat={Infinity} // Make it loop infinitely
+            speed={50}
+            repeat={Infinity} 
             style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#000000' }} 
           />
                    <FaSearch
