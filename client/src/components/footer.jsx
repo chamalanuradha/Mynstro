@@ -7,16 +7,16 @@ function Footer() {
       <div className="container mx-auto p-4 text-center flex flex-col lg:flex-row lg:justify-between gap-1">
         <p className="">© All Rights Reserved 2025</p>
         <div className="flex items-center justify-center gap-4 text-2xl">
-          <a href="#" className="text-[#093A3E] hover:text-[#1877F2] transition-colors duration-300">
+          <a href="#" className="text-[#093A3E] hover:text-[#F4A261] transition-colors duration-300">
             <FaFacebook />
           </a>
-          <a href="#" className="text-[#093A3E] hover:text-[#1DA1F2] transition-colors duration-300">
+          <a href="#" className="text-[#093A3E] hover:text-[#F4A261] transition-colors duration-300">
             <FaTwitter />
           </a>
-          <a href="#" className="text-[#093A3E] hover:text-[#E4405F] transition-colors duration-300">
+          <a href="#" className="text-[#093A3E] hover:text-[#F4A261] transition-colors duration-300">
             <FaInstagram />
           </a>
-          <a href="#" className="text-[#093A3E] hover:text-[#0A66C2] transition-colors duration-300">
+          <a href="#" className="text-[#093A3E] hover:text-[#F4A261] transition-colors duration-300">
             <FaLinkedin />
           </a>
         </div>

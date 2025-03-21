@@ -1,29 +1,42 @@
 import React from "react";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaSearch } from "react-icons/fa";
 
 function Header() {
+  // Search function (Replace with your actual logic)
+  const handleSearchClick = () => {
+    alert("Search icon clicked!");
+  };
+
   return (
     <header className="bg-gray-100 text-[#093A3E] py-4 sticky">
       <div className="container mx-auto flex items-center justify-between px-4">
         {/* Site Name */}
-        <span className="text-3xl font-bold">Mynstro</span>
+        <span className="text-3xl font-bold">
+          <span className="text-[#093A3E]">My</span>
+          <span className="text-[#F4A261]">nstro</span>
+        </span>
 
         {/* Search Bar */}
-        <div className="flex-grow mx-4">
+        <div className="relative flex-grow mx-4">
           <input
             type="text"
             placeholder="Search..."
-            className="w-full px-4 py-2 rounded-md border border-gray-600 bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 pr-10 rounded-md bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
+          />
+          {/* Search Icon - Positioned at the End */}
+          <FaSearch
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#F4A261] cursor-pointer"
+            onClick={handleSearchClick}
           />
         </div>
 
         {/* Login & Cart */}
         <div className="flex items-center gap-4">
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md">Login</button>
+          <button className="px-4 py-2 bg-[#F4A261] font-bold hover:bg-[#f49061] rounded-md">Login</button>
           <button className="relative">
-            <FaShoppingCart className="text-2xl" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white px-2 py-0.5 rounded-full">
-              2 
+            <FaShoppingCart className="text-3xl" />
+            <span className="absolute -top-2 -right-2 bg-[#F4A261] text-xs text-white px-1.5 py-0.5 rounded-full">
+              2
             </span>
           </button>
         </div>
