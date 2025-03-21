@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
+import { TypeAnimation } from 'react-type-animation';  
 
 function Header() {
-  // Search function (Replace with your actual logic)
+
   const handleSearchClick = () => {
     alert("Search icon clicked!");
   };
+
+  const [searchText, setSearchText] = useState("");
 
   return (
     <header className="bg-gray-100 text-[#093A3E] py-4 sticky">
@@ -20,11 +23,22 @@ function Header() {
         <div className="relative flex-grow mx-4">
           <input
             type="text"
-            placeholder="Search..."
-            className="w-full px-4 py-2 pr-10 rounded-md bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder=" " 
+            className="w-full px-4 py-2 pl-10 rounded-md bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
           />
-          {/* Search Icon - Positioned at the End */}
-          <FaSearch
+          
+
+          <TypeAnimation
+            sequence={[
+              'Search...', 
+              1000, 
+            ]}
+            speed={50} 
+            style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#F4A261' }} 
+          />
+                   <FaSearch
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#F4A261] cursor-pointer"
             onClick={handleSearchClick}
           />
