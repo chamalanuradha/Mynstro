@@ -5,6 +5,7 @@ import { TypeAnimation } from "react-type-animation";
 
 function Search() {
   const [searchText, setSearchText] = useState("");
+
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
@@ -18,7 +19,7 @@ function Search() {
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         placeholder=" "
-        className="w-full px-4 py-2 pl-10 rounded-md bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
+        className="w-full px-4 py-2 pl-3 rounded-md bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
       />
 
       {/* Show animation only if the search box is empty */}
@@ -44,7 +45,7 @@ function Search() {
             top: "50%",
             transform: "translateY(-50%)",
             color: "#000000",
-            pointerEvents: "none", // Prevent interaction
+            pointerEvents: "none",
           }}
         />
       )}
