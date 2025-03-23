@@ -1,58 +1,25 @@
-import React, { useState } from "react";
-import { FaShoppingCart, FaSearch } from "react-icons/fa";
-import { TypeAnimation } from 'react-type-animation';  
+import React from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Search from "../components/search";
+
+
 
 function Header() {
-  const [searchText, setSearchText] = useState("");
 
-  const handleSearchClick = () => {
-    alert("Search icon clicked!");
-  };
 
   return (
     <header className="bg-gray-100 text-[#093A3E] py-4 sticky">
       <div className="container mx-auto flex items-center justify-between px-4">
         {/* Site Name */}
-        <span className="text-3xl font-bold">
+        <Link to={'/'} className="text-3xl font-bold">
           <span className="text-[#093A3E]">My</span>
           <span className="text-[#F4A261]">nstro</span>
-        </span>
+        </Link>
 
         {/* Search Bar */}
         <div className="relative flex-grow mx-4">
-          <input
-            type="text"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder=" " 
-            className="w-full px-4 py-2 pl-1 rounded-md bg-gray-200 text-black focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
-          />
-
-
-          {searchText === "" && (
-            <TypeAnimation
-              sequence={[
-                'Search products...',
-                1000, 
-                'Find the best deals...',
-                1000,
-                'Shop top categories...',
-                1000,
-                'Discover amazing offers...',
-                1000,
-                'Explore trending items...',
-                1000
-              ]}
-              speed={50}
-              repeat={Infinity} 
-              style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#000000' }} 
-            />
-          )}
-
-          <FaSearch
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#F4A261] cursor-pointer"
-            onClick={handleSearchClick}
-          />
+         <Search/>
         </div>
 
         {/* Login & Cart */}
