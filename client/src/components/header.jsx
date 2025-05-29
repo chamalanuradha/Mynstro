@@ -12,7 +12,7 @@ function Header() {
     <header className="bg-gray-100 text-[#093A3E] py-4 sticky">
       <div className="container mx-auto flex items-center justify-between px-4">
         {/* Site Name */}
-        <Link to={'/'} className="text-3xl font-bold">
+        <Link to={'/'} className="text-3xl font-bold lg:text-3xl sm:text-xl">
           <span className="text-[#093A3E]">My</span>
           <span className="text-[#F4A261]">nstro</span>
         </Link>
