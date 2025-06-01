@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 
 function register() {
   const [formData, setFormData] = useState({
-    fullname: "",
-    contact: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -23,10 +22,6 @@ function register() {
 
     if (!formData.fullname.trim()) {
       newErrors.fullname = "Full name is required";
-    }
-
-    if (!formData.contact.trim()) {
-      newErrors.contact = "Contact number is required";
     }
 
     if (!formData.email.trim()) {
@@ -57,37 +52,20 @@ function register() {
         <form className="space-y-4" onSubmit={handleSubmit}>
           
           <div>
-            <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Full Name
             </label>
             <input
               type="text"
-              id="fullname"
-              value={formData.fullname}
+              id="name"
+              value={formData.name}
               onChange={handleChange}
               className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your full name"
             />
-            {errors.fullname && <p className="text-sm text-red-600">{errors.fullname}</p>}
+            {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
           </div>
 
-
-          <div>
-            <label htmlFor="contact" className="block text-sm font-medium text-gray-700">
-              Contact No
-            </label>
-            <input
-              type="tel"
-              id="contact"
-              value={formData.contact}
-              onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your contact number"
-            />
-            {errors.contact && <p className="text-sm text-red-600">{errors.contact}</p>}
-          </div>
-
-    
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
