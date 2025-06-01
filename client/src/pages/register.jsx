@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import { registerUser } from "../services/user";
 
 function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,6 +22,15 @@ function Register() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
     setErrors({ ...errors, [e.target.id]: "" });
     setMessage(null);
+  };
+
+  const clearForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -40,26 +50,53 @@ function Register() {
     if (Object.keys(newErrors).length === 0) {
       try {
         const response = await registerUser(formData);
-        setMessage({ type: "success", text: response.message || "Registration successful! Check your email." });
+        setMessage({
+          type: "success",
+          text: response.message || "Registration successful! Redirecting...",
+        });
+        clearForm();
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000); 
       } catch (error) {
-        setMessage({ type: "error", text: error.message || "Something went wrong" });
+        setMessage({
+          type: "error",
+          text: error.message || "Something went wrong",
+        });
+        clearForm(); 
       }
     }
+  };
+
+  const handleCloseMessage = () => {
+    setMessage(null);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-bold mb-6">Register</h2>
-        {message && (
-          <p
-            className={`text-sm text-white mb-4 px-4 py-2 rounded-md ${message.type === "success" ? "bg-green-600" : "bg-red-600"
-              }`}
-          >
-            {message.text}
-          </p>
-        )}
+        <h2 className="text-2xl text-center font-bold mb-6">Register</h2>
 
+        {message && (
+          <div
+            className={`relative text-sm text-white mb-4 px-4 py-2 rounded-md ${
+              message.type === "success" ? "bg-green-600" : "bg-red-600"
+            }`}
+          >
+            <p>{message.text}</p>
+            {message.type === "error" && (
+              <button
+                onClick={handleCloseMessage}
+                className="absolute top-1 right-2 text-white text-lg"
+              >
+
+                
+                <FontAwesomeIcon icon={faSquareXmark} />
+              </button>
+            )}
+          </div>
+        )}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
