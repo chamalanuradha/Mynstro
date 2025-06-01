@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../services/user"; 
+
 
 function register() {
   const [formData, setFormData] = useState({
@@ -10,18 +12,19 @@ function register() {
   });
 
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
     setErrors({ ...errors, [e.target.id]: "" });
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
-    if (!formData.fullname.trim()) {
-      newErrors.fullname = "Full name is required";
+    if (!formData.name.trim()) {
+      newErrors.name = "Full name is required";
     }
 
     if (!formData.email.trim()) {
@@ -41,7 +44,13 @@ function register() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted:", formData)
+      try {
+        const response = await registerUser(formData);
+        setMessage(response.message);
+        alert("Registration successful! Check your email to verify.");
+      } catch (error) {
+        setMessage(error.message || "Something went wrong");
+      }
     }
   };
 
@@ -49,6 +58,11 @@ function register() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+
+          {message && (
+          <p className="text-sm text-center text-red-600 mb-4">{message}</p>
+        )}
+        
         <form className="space-y-4" onSubmit={handleSubmit}>
           
           <div>

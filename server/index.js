@@ -12,9 +12,9 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 app.use(cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL
+  origin: "http://localhost:5173",
 }));
+
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(helmet({
