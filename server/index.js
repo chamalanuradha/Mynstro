@@ -16,7 +16,7 @@ app.use(cors({
     origin: process.env.CLIENT_URL
 }));
 app.use(express.json());
-app.use(morgan());
+app.use(morgan('dev'));
 app.use(helmet({
     crossOriginResourcePolicy: true, 
 }))
