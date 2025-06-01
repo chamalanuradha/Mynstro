@@ -25,3 +25,25 @@ export async function registerUser(formData) {
     throw error;
   }
 }
+
+export async function loginUser({ email, password }) {
+  try {
+    const response = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return {
+      message: error.message || "Something went wrong",
+      success: false,
+      error: true,
+    };
+  }
+}

@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import { faChampagneGlasses, faEye, faEyeSlash, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import { loginUser } from "../services/user";
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -19,29 +17,28 @@ function Login() {
     setMessage(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
-
     if (!formData.email.trim()) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
-
     setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
-    if (Object.keys(newErrors).length === 0) {
-      // Simulate API call or validation
-      if (formData.email === "admin@example.com" && formData.password === "admin123") {
-        setMessage({ type: "success", text: "Login successful!" });
-        setFormData({ email: "", password: "" });
-      } else {
-        setMessage({ type: "error", text: "Invalid email or password" });
-      }
+    const result = await loginUser(formData);
+
+    console.log('result', result);
+
+    if (result.success) {
+      setMessage({ type: "success", text: result.message });
+      setFormData({ email: "", password: "" });
+      setTimeout(() => navigate("/"), 1000);
+    } else {
+      setMessage({ type: "error", text: result.message });
     }
   };
 
-  const handleCloseMessage = () => {
-    setMessage(null);
-  };
+  const handleCloseMessage = () => setMessage(null);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -59,9 +56,7 @@ function Login() {
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
               id="email"
@@ -74,9 +69,7 @@ function Login() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -97,10 +90,7 @@ function Login() {
             {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
-          >
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
             Login
           </button>
         </form>
