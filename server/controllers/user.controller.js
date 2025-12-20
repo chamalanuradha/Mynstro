@@ -39,7 +39,7 @@ export async function registerUser(req, res) {
     const newUser = new UserModel({ name, email, password: hashedPassword });
     const save = await newUser.save();   
 
-    const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save._id}`;
+    const verifyEmailUrl = `${process.env.BACKEND_URL}/verify-email/${save._id}`;
 
 
 
