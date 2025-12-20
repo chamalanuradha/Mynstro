@@ -6,7 +6,7 @@ import upload from "../middleware/multer.js";
 const userRouter = Router();
 
 userRouter.post('/register', registerUser);
-userRouter.post('/verifyemail', verifyEmail);
+userRouter.post("/verify-email/:id", verifyEmail);
 userRouter.post('/login', login);
 userRouter.get('/logout', auth, logout );
 userRouter.put('/uploadavatar', auth, upload.single('avatar'), uploadAvatar);
