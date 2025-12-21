@@ -17,26 +17,30 @@ function Login() {
     setMessage(null);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = {};
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.password) newErrors.password = "Password is required";
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const result = await loginUser(formData);
+  const newErrors = {};
+  if (!formData.email.trim()) newErrors.email = "Email is required";
+  if (!formData.password) newErrors.password = "Password is required";
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
 
-    console.log('result', result);
+  const result = await loginUser(formData);
 
-    if (result.success) {
-      setMessage({ type: "success", text: result.message });
-      setFormData({ email: "", password: "" });
-      setTimeout(() => navigate("/"), 1000);
-    } else {
-      setMessage({ type: "error", text: result.message });
-    }
-  };
+  if (result.success) {
+    localStorage.setItem("token", result.data.token);
+    localStorage.setItem("user", JSON.stringify(result.data.user));
+
+    setMessage({ type: "success", text: result.message });
+    setFormData({ email: "", password: "" });
+
+    setTimeout(() => navigate("/"), 1000);
+  } else {
+    setMessage({ type: "error", text: result.message });
+  }
+};
+
 
   const handleCloseMessage = () => setMessage(null);
 
