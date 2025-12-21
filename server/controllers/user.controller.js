@@ -1,14 +1,7 @@
 import UserModel from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import sendEmail from '../config/sendEmail.js';
-import verifyEmailTemplate from '../utils/veryfyEmailTemplate.js';
-import forgotPasswordTemplate from '../utils/forgotPasswordTemplate.js';
-import genarateRefreshToken  from '../utils/refreshToken.js';
-import  genarateAccessToken  from '../utils/accessToken.js';
 import dotenv from 'dotenv';
-import uploadImageCloudinary from "../utils/uploadImageCloudinary.js";
-import generateOTP from "../utils/genarateOTP.js";
-import jwt from "jsonwebtoken";
+import { generateToken } from "../utils/jwt.js";
 dotenv.config();
 
 export async function registerUser(req, res) {
@@ -39,19 +32,6 @@ export async function registerUser(req, res) {
     const newUser = new UserModel({ name, email, password: hashedPassword });
     const save = await newUser.save();   
 
-    const verifyEmailUrl = `${process.env.BACKEND_URL}/verify-email/${save._id}`;
-
-
-
-    await sendEmail({
-      sendTo: email,
-      subject: "Verify email from Mynstro",
-      html: verifyEmailTemplate({
-        name: name,
-        url: verifyEmailUrl
-      })
-    });
-
     return res.json({
       message: "User registered successfully",
       error: false,
@@ -68,110 +48,61 @@ export async function registerUser(req, res) {
   }
 }
 
-export async function verifyEmail(req, res) {
-  try {
-    const { code } = req.query;
-
-    const user = await UserModel.findOne({ _id: code });
-
-    if (!user) {
-      return res.status(400).json({
-        message: "Invalid verification code",
-        error: true,
-        success: false,
-      });
-    }
-
-    user.verify_email = true;
-    await user.save();
-
-    return res.json({
-      message: "Email verified successfully",
-      error: false,
-      success: true,
-    });
-
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message || "Error verifying email",
-      error: true,
-      success: false,
-    });
-  }  
-}
-
 export async function login(req, res) {
   try {
     const { email, password } = req.body;
 
-    if(!email || !password){
+    if (!email || !password) {
       return res.status(400).json({
-        message: "Please provide email and password",
-        error: true,
+        message: "Email and password required",
         success: false,
       });
     }
 
     const user = await UserModel.findOne({ email });
-
     if (!user) {
       return res.status(400).json({
         message: "Invalid email or password",
-        error: true,
         success: false,
       });
     }
 
-    if(user.status !== 'Active'){
-      return res.status(400).json({
-        message: "Your account is not active. Please contact the administrator",
-        error: true,
+    if (user.status !== "Active") {
+      return res.status(403).json({
+        message: "Account not active",
         success: false,
-      })
+      });
     }
 
-    const isPasswordValid = await bcryptjs.compare(password, user.password);
-    if (!isPasswordValid) {
+    const isMatch = await bcryptjs.compare(password, user.password);
+    if (!isMatch) {
       return res.status(400).json({
         message: "Invalid email or password",
-        error: true,
         success: false,
       });
     }
 
-    const accesstoken = await genarateAccessToken(user._id);
-    const refreshToken = await genarateRefreshToken(user._id);
-
-     
-      user.refresh_token = refreshToken;
-      await user.save();
-
-    const cookiesOption = {
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true
-    }
-
-    res.cookie('refreshToken', refreshToken, cookiesOption);
-    res.cookie('accesstoken', accesstoken, cookiesOption);
+    const token = generateToken(user._id);
 
     return res.json({
       message: "Login successful",
-      error: false,
       success: true,
       data: {
-        accesstoken,
-        refreshToken,
-        user
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email
+        }
       }
-    })
-    } catch (error) {
-    return res.status(500).json({
-      message: error.message || "Error logging in",
-      error: true,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
       success: false,
     });
-    }
+  }
 }
 
 export async function logout(req,res){
