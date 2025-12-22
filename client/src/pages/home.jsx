@@ -1,9 +1,14 @@
 import React from 'react'
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function home() {
-  return (
-    <div>
-       <h1 className='text-red-500 text-3xl font-bold underline'>Home page</h1> 
-    </div>
-  )
+    return (
+        <div>
+            <Header />
+            home
+            <Footer />
+        </div>
+
+    )
 }

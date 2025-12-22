@@ -1,22 +1,24 @@
-import { Outlet, useLocation } from 'react-router-dom'
-import './App.css'
-import Header from './components/header'
-import Footer from './components/footer'
+import { Routes, Route } from "react-router-dom";
+import Landing from "./pages/landing";
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register";
+import Home from "./pages/home";
 
 function App() {
-  const location = useLocation();
-
-  const hideHeaderFooter = ['/login', '/register'];
-
-  const shouldHide = hideHeaderFooter.includes(location.pathname);
-
   return (
     <>
-      {!shouldHide && <Header />}
-      <main className='min-h-[80vh]'>
-        <Outlet />
+  
+
+      <main className="min-h-[80vh]">
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
       </main>
-      {!shouldHide && <Footer />}
+
+
     </>
   );
 }
