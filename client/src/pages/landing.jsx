@@ -46,7 +46,7 @@ const slides = [
   }, []);
 
   return (
-    <div className=" mx-auto p-10">
+    <div className=" mx-auto py-10 px-25">
   <section className="relative p-6 border-6 border-[#F4A261] rounded-xl overflow-hidden h-95 flex">
 
  <div className="w-3/5 p-10 flex flex-col justify-between">
