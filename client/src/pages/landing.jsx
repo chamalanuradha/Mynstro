@@ -63,7 +63,7 @@ const slides = [
 
 
   <a
-    href="/register"
+    href="/login"
     className="w-fit bg-transparent font-bold text-[#F4A261] px-6 py-2 rounded-md border-3 border-[#F4A261] hover:bg-[#F4A261] hover:text-white hover:border-white transition-colors duration-300"
   >
     Get Started
