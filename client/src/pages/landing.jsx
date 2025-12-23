@@ -123,19 +123,23 @@ const slides = [
 
 
       <section className="py-16 text-center bg-gray-100 rounded-lg mb-10">
-        <h2 className="text-2xl font-bold mb-4">
-          Special offers 🚀
-        </h2>
-        <p className="text-gray-600 mb-6">
-          Join Mynstro and take your project to the next level.
-        </p>
-        <a
-          href="/register"
-          className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700"
-        >
-          Create Account
-        </a>
-      </section>
+  <h2 className="text-2xl font-bold mb-4">
+    Special Offers 🚀
+  </h2>
+
+  <p className="text-gray-600 mb-6 max-w-xl mx-auto">
+    Get started with Mynstro today and enjoy exclusive features designed to
+    help you build, manage, and scale your projects faster.
+  </p>
+
+  <a
+    href="/register"
+    className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition"
+  >
+    Create Free Account
+  </a>
+</section>
+
 
     </div>
   );
