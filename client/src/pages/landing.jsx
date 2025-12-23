@@ -77,8 +77,6 @@ const slides = [
   />
 </div>
 
-
-  {/* Dots / carousel navigation */}
   <div className="flex gap-2 justify-center absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
     {slides.map((_, index) => (
       <span
@@ -93,34 +91,40 @@ const slides = [
 </section>
 
 
-      {/* Features Section */}
+
       <section className="grid md:grid-cols-3 gap-6 py-16">
-        <div className="p-6 border rounded-lg shadow-sm">
-          <h3 className="text-lg font-semibold mb-2">Secure Auth</h3>
-          <p className="text-gray-600">
-            JWT-based authentication with refresh tokens and email verification.
-          </p>
-        </div>
+  <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+    <h3 className="text-lg font-semibold mb-2">Top Selling</h3>
+    <p className="text-gray-600">
+      Explore our best-selling products loved by thousands of customers for
+      their quality, style, and value.
+    </p>
+     <p className="p-15">
+   
+    </p>
+  </div>
 
-        <div className="p-6 border rounded-lg shadow-sm">
-          <h3 className="text-lg font-semibold mb-2">Fast Performance</h3>
-          <p className="text-gray-600">
-            Optimized backend and frontend built with modern tech.
-          </p>
-        </div>
+  <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+    <h3 className="text-lg font-semibold mb-2">Recently Updated</h3>
+    <p className="text-gray-600">
+      Stay ahead with newly arrived products and the latest fashion and
+      lifestyle trends added just for you.
+    </p>
+  </div>
 
-        <div className="p-6 border rounded-lg shadow-sm">
-          <h3 className="text-lg font-semibold mb-2">Scalable</h3>
-          <p className="text-gray-600">
-            Ready to scale for startups and enterprise solutions.
-          </p>
-        </div>
-      </section>
+  <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+    <h3 className="text-lg font-semibold mb-2">Top Rated</h3>
+    <p className="text-gray-600">
+      Discover highly rated items reviewed by real customers for comfort,
+      durability, and satisfaction.
+    </p>
+  </div>
+</section>
 
-      {/* Footer CTA */}
+
       <section className="py-16 text-center bg-gray-100 rounded-lg mb-10">
         <h2 className="text-2xl font-bold mb-4">
-          Start building today 🚀
+          Special offers 🚀
         </h2>
         <p className="text-gray-600 mb-6">
           Join Mynstro and take your project to the next level.
