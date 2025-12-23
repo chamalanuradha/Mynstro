@@ -48,47 +48,47 @@ function Header() {
         <div className="container mx-auto px-25 justify-center flex">
           <ul className="flex items-center gap-18 py-3 text-lg font-bold text-gray-700">
             <li>
-              <Link to="/category/beauty" className="hover:text-[#F4A261]">
+              <Link to="/beauty" className="hover:text-[#F4A261]">
                 Beauty
               </Link>
             </li>
             <li>
-              <Link to="/category/fashion" className="hover:text-[#F4A261]">
+              <Link to="/fashion" className="hover:text-[#F4A261]">
                 Fashion
               </Link>
             </li>
             <li>
-              <Link to="/category/shoes" className="hover:text-[#F4A261]">
+              <Link to="/shoes" className="hover:text-[#F4A261]">
                 Shoes
               </Link>
             </li>
             <li>
-              <Link to="/category/jewellery" className="hover:text-[#F4A261]">
+              <Link to="/jewellery" className="hover:text-[#F4A261]">
                 Jewellery
               </Link>
             </li>
             <li>
-              <Link to="/category/spectacles" className="hover:text-[#F4A261]">
+              <Link to="/spectacles" className="hover:text-[#F4A261]">
                 Spectacles
               </Link>
             </li>
             <li>
-              <Link to="/category/spectacles" className="hover:text-[#F4A261]">
+              <Link to="/offers" className="hover:text-[#F4A261]">
                 Offers
               </Link>
             </li>
             <li>
-              <Link to="/category/spectacles" className="hover:text-[#F4A261]">
+              <Link to="/disscounts" className="hover:text-[#F4A261]">
                 Disscounts
               </Link>
             </li>
              <li>
-              <Link to="/category/spectacles" className="hover:text-[#F4A261]">
+              <Link to="/aboutus" className="hover:text-[#F4A261]">
                 About Us
               </Link>
             </li>
             <li>
-              <Link to="/category/spectacles" className="hover:text-[#F4A261]">
+              <Link to="/contact" className="hover:text-[#F4A261]">
                 Contact
               </Link>
             </li>
