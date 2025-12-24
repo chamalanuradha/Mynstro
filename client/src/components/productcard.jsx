@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 export default function ProductCard({ product }) {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden">
-   
+
       <div className="relative">
         <img
           src={product.image}
@@ -21,8 +21,10 @@ export default function ProductCard({ product }) {
           {product.name}
         </h3>
 
-        <p className="text-sm text-gray-500 line-clamp-2">
-          {product.description}
+        <p className="text-sm text-gray-500">
+          {product.description.length > 40
+            ? product.description.slice(0, 40) + "..."
+            : product.description}
         </p>
 
 
@@ -36,7 +38,7 @@ export default function ProductCard({ product }) {
           </span>
         </div>
 
-     
+
         <div className="flex items-center justify-between pt-2">
           <span className="text-xl font-bold text-[#F4A261]">
             Rs {product.price}
