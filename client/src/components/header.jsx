@@ -1,6 +1,7 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+
 import Search from "../components/search";
 
 function Header() {
@@ -44,61 +45,112 @@ function Header() {
       </div>
 
    
-      <nav className="bg-gray-200">
-        <div className="container mx-auto px-25 justify-center flex">
+     <nav className="bg-gray-200">
+  <div className="container mx-auto px-25 justify-center flex">
           <ul className="flex items-center gap-18 py-3 text-lg font-bold text-gray-700">
-            <li>
-              <Link to="/" className="hover:text-[#F4A261]">
-                Home
-              </Link>
-            </li><li>
-              <Link to="/beauty" className="hover:text-[#F4A261]">
-                Beauty
-              </Link>
-            </li>
-            <li>
-              <Link to="/fashion" className="hover:text-[#F4A261]">
-                Fashion
-              </Link>
-            </li>
-            <li>
-              <Link to="/shoes" className="hover:text-[#F4A261]">
-                Shoes
-              </Link>
-            </li>
-            <li>
-              <Link to="/jewellery" className="hover:text-[#F4A261]">
-                Jewellery
-              </Link>
-            </li>
-            <li>
-              <Link to="/spectacles" className="hover:text-[#F4A261]">
-                Spectacles
-              </Link>
-            </li>
-            <li>
-              <Link to="/offers" className="hover:text-[#F4A261]">
-                Offers
-              </Link>
-            </li>
-            <li>
-              <Link to="/disscounts" className="hover:text-[#F4A261]">
-                Disscounts
-              </Link>
-            </li>
-             <li>
-              <Link to="/aboutus" className="hover:text-[#F4A261]">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:text-[#F4A261]">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <li>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/beauty"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Beauty
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/fashion"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Fashion
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/shoes"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Shoes
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/jewellery"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Jewellery
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/spectacles"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Spectacles
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/offers"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Offers
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/disscounts"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Disscounts
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/aboutus"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          About Us
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Contact
+        </NavLink>
+      </li>
+    </ul>
+  </div>
+</nav>
     </header>
   );
 }
