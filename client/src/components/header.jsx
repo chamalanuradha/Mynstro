@@ -48,6 +48,10 @@ function Header() {
         <div className="container mx-auto px-25 justify-center flex">
           <ul className="flex items-center gap-18 py-3 text-lg font-bold text-gray-700">
             <li>
+              <Link to="/" className="hover:text-[#F4A261]">
+                Home
+              </Link>
+            </li><li>
               <Link to="/beauty" className="hover:text-[#F4A261]">
                 Beauty
               </Link>

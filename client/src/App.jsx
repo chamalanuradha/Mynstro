@@ -4,7 +4,6 @@ import Footer from "./components/footer";
 import Landing from "./pages/landing";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import Home from "./pages/home";
 import Contact from "./pages/contact";
 import AboutUs from "./pages/aboutus";
 import Beauty from "./pages/beauty";
@@ -33,7 +32,6 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/home" element={<Home />} />
           <Route path="/beauty" element={<Beauty />} />
           <Route path="/fashion" element={<Fashion />} />
           <Route path="/shoes" element={<Shoes />} />
