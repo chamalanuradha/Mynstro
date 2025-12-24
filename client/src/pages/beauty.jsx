@@ -43,7 +43,7 @@ const products = [
     price: 1850,
     rating: 4.8,
     sold: 320,
-    store: "BeautyStore LK",
+    subcategory: "Lipstick",
     image: image1,
   },
   {
@@ -53,7 +53,7 @@ const products = [
     price: 2450,
     rating: 4.6,
     sold: 210,
-    store: "Care Plus",
+    subcategory: "Shampoo",
     image: image2,
   },
    {
@@ -63,7 +63,7 @@ const products = [
     price: 2450,
     rating: 4.6,
     sold: 210,
-    store: "Care Plus",
+    subcategory: "Shampoo",
     image: image2,
   },
    {
@@ -73,7 +73,7 @@ const products = [
     price: 2450,
     rating: 4.6,
     sold: 210,
-    store: "Care Plus",
+    subcategory: "Shampoo",
     image: image2,
   },
 ];
