@@ -1,7 +1,152 @@
-import React from 'react'
 
-export default function shoes() {
+import React,{useState,useEffect} from 'react'
+import image1 from "../assets/images/beuties.jpg";
+import image2 from "../assets/images/clothes.jpg";
+import image3 from "../assets/images/shoes.jpg";
+import image4 from "../assets/images/jewelaries.jpg";
+import image5 from "../assets/images/specs.jpg";
+import ProductCard from '../components/productcard.jsx';
+
+export default function beauty() {
+const slides = [
+  {
+    title: "Men’s Footwear",
+    desc: "Discover stylish and durable shoes designed for everyday wear.\nFrom formal to casual, step out with confidence and comfort.",
+    image: image1,
+  },
+  {
+    title: "Women’s Footwear",
+    desc: "Explore elegant and trendy footwear for every occasion.\nDesigned to combine fashion, comfort, and confidence.",
+    image: image2,
+  },
+  {
+    title: "Kids’ Footwear",
+    desc: "Comfortable and colorful shoes made for active kids.\nPerfect support for playtime, school, and everyday adventures.",
+    image: image3,
+  },
+  {
+    title: "Sports & Active Shoes",
+    desc: "High-performance shoes built for running, training, and workouts.\nLightweight designs with maximum grip and flexibility.",
+    image: image4,
+  },
+  {
+    title: "Formal & Casual Shoes",
+    desc: "Classic and modern shoes suitable for office and daily wear.\nStyle that fits perfectly into your lifestyle.",
+    image: image5,
+  },
+];
+
+
+const products = [
+  {
+    id: 1,
+    name: "Men’s Casual Sneakers",
+    description: "Lightweight and breathable sneakers for everyday comfort.",
+    price: 6850,
+    rating: 4.7,
+    sold: 320,
+    subcategory: "Men",
+    image: image1,
+  },
+  {
+    id: 2,
+    name: "Women’s Fashion Heels",
+    description: "Elegant heels designed for parties and special occasions.",
+    price: 8450,
+    rating: 4.8,
+    sold: 210,
+    subcategory: "Women",
+    image: image2,
+  },
+  {
+    id: 3,
+    name: "Kids’ School Shoes",
+    description: "Durable and comfortable school shoes for daily use.",
+    price: 4250,
+    rating: 4.6,
+    sold: 185,
+    subcategory: "Kids",
+    image: image3,
+  },
+  {
+    id: 4,
+    name: "Sports Running Shoes",
+    description: "High-grip running shoes built for performance and endurance.",
+    price: 9650,
+    rating: 4.9,
+    sold: 260,
+    subcategory: "Sports",
+    image: image4,
+  },
+  {
+    id: 5,
+    name: "Men’s Formal Leather Shoes",
+    description: "Premium leather shoes perfect for office and formal events.",
+    price: 11500,
+    rating: 4.8,
+    sold: 150,
+    subcategory: "Formal",
+    image: image5,
+  },
+];
+
+
+  
+    const [current, setCurrent] = useState(0);
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrent((prev) => (prev + 1) % slides.length);
+      }, 3000); 
+  
+      return () => clearInterval(interval);
+    }, []);
   return (
-    <div>shoes</div>
+    <div className=" mx-auto py-10 px-25">
+  <section className="relative p-6 border-6 border-[#F4A261] rounded-xl overflow-hidden h-95 flex mb-10">
+
+ <div className="w-3/5 p-10 flex flex-col justify-between">
+
+  <div>
+    <h1 className="text-4xl font-bold mb-4 text-gray-600">
+      {slides[current].title}
+    </h1>
+
+    <p className="text-gray-600">
+      {slides[current].desc}
+    </p>
+  </div>
+</div>
+<div className="w-2/5 relative overflow-hidden">
+  <img
+    src={slides[current].image}
+    alt={slides[current].title}
+    className="h-full w-full object-cover"
+  />
+</div>
+
+  <div className="flex gap-2 justify-center absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
+    {slides.map((_, index) => (
+      <span
+        key={index}
+        onClick={() => setCurrent(index)}
+        className={`w-3 h-3 rounded-full cursor-pointer ${
+          index === current ? "bg-[#F4A261]" : "bg-black/30"
+        }`}
+      />
+    ))}
+  </div>
+</section>
+<div className='mb-6 justify-center flex text-2xl font-bold mb-4 text-gray-600'>
+  <h1>Beuty Store</h1>
+</div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+  {products.map((product) => (
+    <ProductCard key={product.id} product={product} />
+  ))}
+</div>
+</div>
   )
 }
