@@ -94,14 +94,15 @@ const handleSubmit = async (e) => {
             {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
           </div>
 
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+          <button type="submit" 
+         className="w-full py-2 bg-[#F4A261] font-bold hover:bg-[#f49061] rounded-md ">
             Login
           </button>
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
           Don't have an account?{" "}
-          <Link to="/register" className="text-blue-600 hover:underline">
+          <Link to="/register" className="text-[#F4A261] font-bold hover:underline">
             Register
           </Link>
         </p>
