@@ -34,7 +34,7 @@ export default function Users() {
       status: "active",
       role: "Seller",
     },
-     {
+    {
       id: 4,
       name: "Kamal Silva",
       email: "kamal@gmail.com",
@@ -44,7 +44,7 @@ export default function Users() {
       status: "active",
       role: "Seller",
     },
-     {
+    {
       id: 5,
       name: "Kamal Silva",
       email: "kamal@gmail.com",
@@ -58,8 +58,10 @@ export default function Users() {
 
   return (
     <div className="container mx-auto px-4 py-4">
+      <div className=" mx-auto bg-white text-4xl font-bold">
+        <h1>Users</h1>
+      </div>
 
-      <h1 className="text-2xl font-bold mb-6">Users</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {users.map((user) => (

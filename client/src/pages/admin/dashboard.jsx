@@ -6,11 +6,13 @@ import Footer from '../../components/footer';
 export default function admindashboard() {
   return (
 
-
-       <div className=" mx-auto px-25 py-4 bg-white text-4xl font-bold text-[#F4A261] justify-center flex">
+<div className="container mx-auto px-4 py-4">
+<div className=" mx-auto bg-white text-4xl font-bold">
         <h1>Admin Dashboard</h1>
 </div>
 
+</div>
+       
         
   )
 }
