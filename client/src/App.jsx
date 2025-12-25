@@ -18,6 +18,8 @@ import Disscount from "./pages/disscounts";
 
 import Admindashboard from "./pages/admin/admindashboard";
 import Users from "./pages/admin/userpage";
+import Product from "./pages/admin/productpage";
+
 
 export default function App() {
   return (
@@ -45,6 +47,8 @@ export default function App() {
       <Route element={<AdminLayout />}>
         <Route path="/admindashboard" element={<Admindashboard />} />
         <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/products" element={<Product />} />
+
       </Route>
 
       {/* 🔹 404 */}
