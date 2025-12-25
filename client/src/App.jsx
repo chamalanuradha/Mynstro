@@ -14,10 +14,12 @@ import Spectacles from "./pages/spectacles";
 import Offers from "./pages/offers";
 import Disscount from "./pages/disscounts";
 
+import Admindashboard from "./pages/admin/admindashboard";
+
 export default function App() {
   const location = useLocation();
 
-  const noLayoutRoutes = ["/login", "/register"];
+  const noLayoutRoutes = ["/login", "/register", "/admindashboard"];
   const validRoutes = ["/", "/login", "/register", "/home", "/contact", "/aboutus", "/beauty", "/fashion", "/shoes", "/jewellery", "/spectacles", "/offers", "/disscounts"];
 
   const is404 = !validRoutes.includes(location.pathname);
@@ -41,6 +43,8 @@ export default function App() {
           <Route path="/disscounts" element={<Disscount />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/aboutus" element={<AboutUs />} />
+
+          <Route path="/admindashboard" element={<Admindashboard />} />
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
       </main>
