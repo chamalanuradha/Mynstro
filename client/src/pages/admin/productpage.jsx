@@ -11,6 +11,7 @@ const products = [
     price: 1850,
     rating: 4.8,
     sold: 320,
+    stock: 25, 
     subcategory: "Lipstick",
     image: "https://cdn.pixabay.com/photo/2017/08/10/03/54/lipstick-2616874_1280.jpg",
   },
@@ -21,6 +22,7 @@ const products = [
     price: 2450,
     rating: 4.6,
     sold: 210,
+    stock: 40,
     subcategory: "Shampoo",
     image: "https://cdn.pixabay.com/photo/2017/01/13/18/33/hair-1978851_1280.jpg",
   },
@@ -41,10 +43,12 @@ const products = [
     price: 1250,
     rating: 4.7,
     sold: 180,
+    stock: 15, 
     subcategory: "Hair Oil",
     image: "https://cdn.pixabay.com/photo/2017/08/02/14/10/hair-2573682_1280.jpg",
   },
 ];
+
 
   return (
     <div className="container mx-auto px-4 py-4">

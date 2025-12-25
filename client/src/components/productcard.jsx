@@ -1,14 +1,13 @@
 import { Star, Pencil, Trash2 } from "lucide-react";
 
 export default function ProductCard({ product }) {
-  // Get user role from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user?.role === "ADMIN";
 
   return (
     <div className="relative bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden">
 
-      {/* Product Image */}
+
       <div className="relative">
         <img
           src={product.image}
@@ -20,7 +19,6 @@ export default function ProductCard({ product }) {
         </span>
       </div>
 
-      {/* Product Info */}
       <div className="p-4 space-y-2">
         <h3 className="font-semibold text-lg line-clamp-1">{product.name}</h3>
         <p className="text-sm text-gray-500">
@@ -37,17 +35,34 @@ export default function ProductCard({ product }) {
           <span className="text-gray-500">Sold {product.sold}+</span>
         </div>
 
+
+        <div className="flex items-center justify-between text-sm pt-1">
+          <span className="text-xl font-bold text-[#F4A261]">
+            Rs {product.price}
+          </span>
+          <span className="text-gray-500 text-sm">
+            Stock:{" "}
+            {product.stock > 0 ? (
+              <span className="text-[#F4A261] font-bold">{product.stock} pcs</span>
+            ) : (
+              <span className="text-red-600 font-bold">Sold Out</span>
+            )}
+          </span>
+
+        </div>
+
+
         <div className="flex items-center justify-end pt-2 gap-2">
           {isAdmin ? (
             <>
               <button
-                className="p-2 rounded-md bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
+                className="p-2 rounded-full bg-[#F4A261] text-black hover:bg-blue-200 transition"
                 title="Update"
               >
                 <Pencil size={16} />
               </button>
               <button
-                className="p-2 rounded-md bg-red-100 text-red-600 hover:bg-red-200 transition"
+                className="p-2 rounded-full bg-[#F4A261] text-black hover:bg-red-200 transition"
                 title="Delete"
               >
                 <Trash2 size={16} />
