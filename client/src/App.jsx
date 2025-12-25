@@ -16,16 +16,19 @@ import Spectacles from "./pages/spectacles";
 import Offers from "./pages/offers";
 import Disscount from "./pages/disscounts";
 
-import Admindashboard from "./pages/admin/admindashboard";
+import Admindashboard from "./pages/admin/dashboard";
 import Users from "./pages/admin/userpage";
 import Product from "./pages/admin/productpage";
+import Offerspage from "./pages/admin/offerspage";
+import Disscountpage from "./pages/admin/disscountpage";
+import Settings from "./pages/admin/settingspage";
 
 
 export default function App() {
   return (
     <Routes>
 
-      {/* 🔹 Public Layout */}
+  
       <Route element={<UserLayout />}>
         <Route path="/" element={<Landing />} />
         <Route path="/beauty" element={<Beauty />} />
@@ -39,19 +42,22 @@ export default function App() {
         <Route path="/aboutus" element={<AboutUs />} />
       </Route>
 
-      {/* 🔹 Auth pages (no layout) */}
+     
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
-      {/* 🔹 Admin Layout */}
+    
       <Route element={<AdminLayout />}>
-        <Route path="/admindashboard" element={<Admindashboard />} />
+        <Route path="/admin/dashboard" element={<Admindashboard />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/products" element={<Product />} />
+        <Route path="/admin/offers" element={<Offerspage />} />
+        <Route path="/admin/disscounts" element={<Disscountpage />} />
+        <Route path="/admin/settings" element={<Settings />} />
 
       </Route>
 
-      {/* 🔹 404 */}
+
       <Route path="*" element={<div>404 Not Found</div>} />
 
     </Routes>

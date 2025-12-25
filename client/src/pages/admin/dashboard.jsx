@@ -5,13 +5,12 @@ import Footer from '../../components/footer';
 
 export default function admindashboard() {
   return (
-    <div>
 
-         <div className=" mx-auto py-10 px-25">
-   admindashboard
-         </div>
-     
 
-        </div>
+       <div className=" mx-auto px-25 py-4 bg-white text-4xl font-bold text-[#F4A261] justify-center flex">
+        <h1>Admin Dashboard</h1>
+</div>
+
+        
   )
 }

@@ -15,7 +15,7 @@ export default function adminheader() {
 
   return (
 
-       <header className="sticky top-0 z-50 bg-gray-100 shadow-sm">
+       <header className="sticky top-0 z-50 bg-gray-100">
       
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
      
@@ -47,9 +47,20 @@ export default function adminheader() {
         </div>
       </div>
 
+
    <nav className="bg-gray-200">
   <div className="container mx-auto px-25 justify-center flex">
           <ul className="flex items-center gap-18 py-3 text-lg font-bold text-gray-700">
+            <li>
+        <NavLink
+          to="/admin/dashboard"
+          className={({ isActive }) =>
+            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
+          }
+        >
+          Dashboard
+        </NavLink>
+      </li>
       <li>
         <NavLink
           to="/admin/users"
@@ -72,7 +83,7 @@ export default function adminheader() {
       </li>
       <li>
         <NavLink
-          to="/fashion"
+          to="/admin/offers"
           className={({ isActive }) =>
             isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
           }
@@ -82,7 +93,7 @@ export default function adminheader() {
       </li>
       <li>
         <NavLink
-          to="/shoes"
+          to="/admin/disscounts"
           className={({ isActive }) =>
             isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
           }
@@ -92,32 +103,12 @@ export default function adminheader() {
       </li>
       <li>
         <NavLink
-          to="/jewellery"
+          to="/admin/settings"
           className={({ isActive }) =>
             isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
           }
         >
           Settings
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/aboutus"
-          className={({ isActive }) =>
-            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
-          }
-        >
-          About Us
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/contact"
-          className={({ isActive }) =>
-            isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
-          }
-        >
-          Contact
         </NavLink>
       </li>
     </ul>
