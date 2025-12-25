@@ -52,7 +52,7 @@ export default function adminheader() {
           <ul className="flex items-center gap-18 py-3 text-lg font-bold text-gray-700">
       <li>
         <NavLink
-          to="/"
+          to="/admin/users"
           className={({ isActive }) =>
             isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
           }
