@@ -62,7 +62,7 @@ export default function adminheader() {
       </li>
       <li>
         <NavLink
-          to="/beauty"
+          to="/admin/products"
           className={({ isActive }) =>
             isActive ? "text-[#F4A261]" : "hover:text-[#F4A261]"
           }
