@@ -1,0 +1,180 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import { registerUser } from "../../services/user";
+
+function AddUser() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+
+  });
+
+
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setErrors({ ...errors, [e.target.id]: "" });
+    setMessage(null);
+      
+  };
+
+  const clearForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      role: "",
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = "Full name is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
+
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const response = await registerUser(formData);
+        setMessage({
+          type: "success",
+          text: "User registration successful!",
+        });
+        clearForm();
+
+        setTimeout(() => {
+          navigate("/admin/users");
+        }, 2000); 
+      } catch (error) {
+        setMessage({
+          type: "error",
+          text: error.message || "Something went wrong",
+        });
+        clearForm(); 
+      }
+    }
+  };
+
+  const handleCloseMessage = () => {
+    setMessage(null);
+  };
+
+  return (
+    <div className="container mx-auto mt-15 justify-center flex items-center ">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+        <h2 className="text-2xl text-center font-bold mb-6">User Form</h2>
+
+        {message && (
+          <div
+            className={`relative text-sm text-white mb-4 px-4 py-2 rounded-md ${
+              message.type === "success" ? "bg-green-600" : "bg-red-600"
+            }`}
+          >
+            <p>{message.text}</p>
+            {message.type === "error" && (
+              <button
+                onClick={handleCloseMessage}
+                className="absolute top-1 right-2 text-white text-lg"
+              >
+                
+                <FontAwesomeIcon icon={faSquareXmark} />
+              </button>
+            )}
+          </div>
+        )}
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your full name"
+            />
+            {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your email"
+            />
+            {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-3 flex items-center text-gray-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
+            </div>
+            {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+          </div>
+            <div>
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                Role
+            </label>
+            <select
+                id="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            >
+                <option value="USER">User</option>
+                <option value="ADMIN">Admin</option>
+            </select>
+            </div>
+
+          <button
+            type="submit"
+            className="w-full py-2 bg-[#F4A261] font-bold hover:bg-[#f49061] rounded-md "
+          >
+            Add User
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default AddUser;
