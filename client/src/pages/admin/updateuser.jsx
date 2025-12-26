@@ -23,9 +23,6 @@ export default function UserUpdate() {
       try {
         const res = await getUserById(id);
         const user = res.data;
-
-        console.log(res);
-
         setFormData({
           name: user.name || "",
           email: user.email || "",
@@ -42,6 +39,8 @@ export default function UserUpdate() {
     }
     loadUser();
   }, [id]);
+
+   console.log(formData);
 
   // Handle input change
   const handleChange = (e) => {
@@ -76,13 +75,9 @@ export default function UserUpdate() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-2xl rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-6">
-          Update User
-        </h2>
-
-     
+  <div className="container mx-auto mt-15 justify-center flex items-center ">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+     <h2 className="text-2xl text-center font-bold mb-6">Update User</h2>
         <div className="flex justify-center mb-6">
       <label className="cursor-pointer">
         <input
@@ -116,58 +111,65 @@ export default function UserUpdate() {
 
   
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={handleChange}
-          />
+  <input
+    type="text"
+    name="name"
+    placeholder="Full Name"
+    value={formData.name}
+    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    onChange={handleChange}
+  />
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={handleChange}
-          />
+  <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    value={formData.email}
+    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    onChange={handleChange}
+  />
 
-          <input
-            type="text"
-            name="mobile"
-            placeholder="Mobile"
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={handleChange}
-          />
+  <input
+    type="text"
+    name="mobile"
+    placeholder="Mobile"
+    value={formData.mobile}
+    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    onChange={handleChange}
+  />
 
-          <select
-            name="role"
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={handleChange}
-          >
-            <option value="">Select Role</option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-          </select>
+  <select
+    name="role"
+    value={formData.role}  
+    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    onChange={handleChange}
+  >
+    <option value="">Select Role</option>
+    <option value="ADMIN">Admin</option>
+    <option value="USER">User</option>
+  </select>
 
-          <select
-            name="status"
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={handleChange}
-          >
-            <option value="">Select Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
+  <select
+    name="status"
+    value={formData.status} 
+    className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    onChange={handleChange}
+  >
+    <option value="">Select Status</option>
+    <option value="Active">Active</option>
+    <option value="Inactive">Inactive</option>
+  </select>
 
-          <textarea
-            name="address"
-            placeholder="Address"
-            rows="3"
-            className="md:col-span-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={handleChange}
-          />
-        </div>
+  <textarea
+    name="address"
+    placeholder="Address"
+    rows="3"
+    value={formData.address} 
+    className="md:col-span-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    onChange={handleChange}
+  />
+</div>
+
 
   
         <div className="flex justify-end gap-3 mt-6">

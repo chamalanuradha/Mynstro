@@ -134,6 +134,25 @@ const {userid} = req.userId;
   }
 }
 
+export async function getAllUsers(req, res) {
+  try {
+     const users = await UserModel.find();
+    return res.json({
+      message: "Users fetched successfully",
+      error: false,
+      success: true,
+      data: users,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error fetching users",
+      error: true,  
+      success: false,
+    });
+  }
+}
+
+
 export async function getUserById(req, res) {
   try {
     const { id } = req.params;
