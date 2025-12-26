@@ -1,79 +1,85 @@
 const API_URL = "http://localhost:5000/api/user";
 
+/* =========================
+   REGISTER
+   ========================= */
 export async function registerUser(formData) {
-  try {
-    const response = await fetch(`${API_URL}/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
-      }),
-    });
+  const response = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role,
+    }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || "Registration failed");
-    }
-
-    return data;
-  } catch (error) {
-    throw error;
+  if (!response.ok) {
+    throw new Error(data.message || "Registration failed");
   }
+
+  return data;
 }
 
+/* =========================
+   LOGIN
+   ========================= */
 export async function loginUser({ email, password }) {
-  try {
-    const response = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
-    });
+  const response = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  });
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return {
-      message: error.message || "Something went wrong",
-      success: false,
-      error: true,
-    };
-  }
+  return response.json();
 }
 
-export const getUserById = async (userId) => {
+
+export async function getUserById(userId) {
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const res = await axios.get(`${API_URL}/users/${userId}`, {
+  const response = await fetch(`${API_URL}/${userId}`, {
+    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  return res.data;
-};
+  const data = await response.json();
 
-// Update user
-export const updateUser = async (userId, formData) => {
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch user");
+  }
+
+  return data;
+}
+
+
+export async function updateUser(userId, formData) {
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const res = await axios.put(
-    `${API_URL}/users/${userId}`,
-    formData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return res.data;
+  const response = await fetch(`${API_URL}/${userId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+   
+    },
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to update user");
+  }
+
+  return data;
 }

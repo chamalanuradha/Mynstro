@@ -1,7 +1,11 @@
 import React from "react";
-import { Pencil, Trash2 } from "lucide-react"; // icons
+import { Pencil, Trash2 } from "lucide-react"; 
+import { useNavigate } from "react-router-dom";
 
 export default function UserCard({ user }) {
+
+  const navigate = useNavigate();
+
   return (
     <div className="relative bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden p-4">
 
@@ -55,6 +59,7 @@ export default function UserCard({ user }) {
         <button
           className="p-2 rounded-full bg-[#F4A261] text-black-600 hover:bg-blue-200 transition"
           title="Update"
+           onClick={() => navigate(`/admin/updateuser/${user._id}`)}
         >
           <Pencil size={16} />
         </button>

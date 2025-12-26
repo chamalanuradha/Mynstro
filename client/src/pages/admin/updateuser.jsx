@@ -1,191 +1,184 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/user";
 
-const DEFAULT_AVATAR =
-  "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+export default function UserUpdate() {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-export default function UserUpdatePage({ userId }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    avatar: null,
     mobile: "",
     address: "",
-    status: "",
     role: "",
+    status: "",
+    avatar: null,
+    avatarPreview: "",
   });
 
-  const [avatarPreview, setAvatarPreview] = useState(DEFAULT_AVATAR);
-  const [loading, setLoading] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const isAdmin = user?.role === "ADMIN";
-
-  // Fetch user
   useEffect(() => {
-    const fetchUser = async () => {
+    async function loadUser() {
       try {
-        setLoading(true);
-        const data = await getUserById(userId);
+        const res = await getUserById(id);
+        const user = res.data;
+
+        console.log(res);
 
         setFormData({
-          name: data.name,
-          email: data.email,
+          name: user.name || "",
+          email: user.email || "",
+          mobile: user.mobile || "",
+          address: user.address || "",
+          role: user.role || "",
+          status: user.status || "",
           avatar: null,
-          mobile: data.mobile,
-          address: data.address,
-          status: data.status,
-          role: data.role,
+          avatarPreview: user.avatar || "",
         });
-
-        setAvatarPreview(data.avatar || DEFAULT_AVATAR);
-      } catch (error) {
-        console.error("Fetch user failed", error);
-      } finally {
-        setLoading(false);
+      } catch (err) {
+        console.error(err.message);
       }
-    };
+    }
+    loadUser();
+  }, [id]);
 
-    fetchUser();
-  }, [userId]);
-
+  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle avatar change
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    setFormData({ ...formData, avatar: file });
-    setAvatarPreview(URL.createObjectURL(file));
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setFormData({ ...formData, avatar: file, avatarPreview: preview });
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = new FormData();
-
-    payload.append("name", formData.name);
-    payload.append("email", formData.email);
-    payload.append("mobile", formData.mobile);
-    payload.append("address", formData.address);
-
-    if (formData.avatar) {
-      payload.append("avatar", formData.avatar);
-    }
-
-    if (isAdmin) {
-      payload.append("status", formData.status);
-      payload.append("role", formData.role);
-    }
-
+  // Handle update submit
+  const handleUpdate = async () => {
     try {
-      setLoading(true);
-      await updateUser(userId, payload);
-      alert("User updated successfully");
-    } catch (error) {
-      console.error("Update failed", error);
-      alert("Update failed");
-    } finally {
-      setLoading(false);
+      const data = new FormData();
+      Object.keys(formData).forEach((key) => {
+        if (formData[key]) data.append(key, formData[key]);
+      });
+
+      await updateUser(id, data);
+
+      alert("User updated successfully!");
+      navigate("/users");
+    } catch (err) {
+      console.error(err.message);
+      alert(err.message);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded relative">
-      <div className="absolute top-4 right-4 text-center">
-        <img
-          src={avatarPreview}
-          alt="Avatar"
-          className="w-24 h-24 rounded-full object-cover border"
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="bg-white w-full max-w-2xl rounded-lg shadow-md p-6">
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">
+          Update User
+        </h2>
+
+     
+        <div className="flex justify-center mb-6">
+      <label className="cursor-pointer">
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const preview = URL.createObjectURL(file);
+              setFormData({ ...formData, avatar: file, avatarPreview: preview });
+            }
+          }}
         />
 
-        <label className="block mt-2 text-sm text-blue-600 cursor-pointer">
-          Change
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            className="hidden"
-          />
-        </label>
-      </div>
+        <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center border border-gray-300 hover:opacity-80">
+          {formData.avatarPreview ? (
+            <img
+              src={formData.avatarPreview}
+              alt="avatar"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-sm text-gray-500">
+              Click to upload
+            </span>
+          )}
+        </div>
+      </label>
+    </div>
 
-      <h2 className="text-xl font-semibold mb-6">Update User</h2>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+  
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
             name="name"
-            value={formData.name}
+            placeholder="Full Name"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
             onChange={handleChange}
-            className="w-full border p-2 rounded"
-            placeholder="Name"
           />
 
           <input
             type="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
             placeholder="Email"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            onChange={handleChange}
           />
 
           <input
             type="text"
             name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
             placeholder="Mobile"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            onChange={handleChange}
           />
+
+          <select
+            name="role"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            onChange={handleChange}
+          >
+            <option value="">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+
+          <select
+            name="status"
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            onChange={handleChange}
+          >
+            <option value="">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
 
           <textarea
             name="address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
             placeholder="Address"
+            rows="3"
+            className="md:col-span-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            onChange={handleChange}
           />
+        </div>
 
-          {isAdmin && (
-            <>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-              >
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="blocked">Blocked</option>
-              </select>
-
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-              >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
-            </>
-          )}
-
-          <button
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded"
-          >
-            {loading ? "Updating..." : "Update User"}
+  
+        <div className="flex justify-end gap-3 mt-6">
+          <button className="px-5 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+            Cancel
           </button>
-        </form>
-      )}
+          <button className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            Update
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

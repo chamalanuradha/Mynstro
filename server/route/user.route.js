@@ -1,20 +1,31 @@
-import {Router} from "express";
-import {registerUser, login, logout, uploadAvatar, updateUser, forgetPassword, verifyOTP, resetPassword, refreshToken} from "../controllers/user.controller.js";
+import { Router } from "express";
+import {
+  registerUser,
+  login,
+  logout,
+  getUserById,
+  updateUser,
+} from "../controllers/user.controller.js";
 import auth from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
 
 const userRouter = Router();
 
-userRouter.post('/register', registerUser);
-userRouter.post('/login', login);
-userRouter.get('/logout', auth, logout );
-userRouter.put('/uploadavatar', auth, upload.single('avatar'), uploadAvatar);
-userRouter.put('/updateuser', auth, updateUser);
-userRouter.put('/forgotpassword', auth, forgetPassword);
-userRouter.put('/verifyforgotpassword', verifyOTP);
-userRouter.put('/resetpassword', resetPassword);
-userRouter.post('/refreshtoken', refreshToken);
+
+userRouter.post("/register", registerUser);
+userRouter.post("/login", login);
+userRouter.get("/logout", auth, logout);
 
 
+
+userRouter.get("/:id", auth, getUserById);
+
+
+userRouter.put(
+  "/:id",
+  auth,
+  upload.single("avatar"),
+  updateUser
+);
 
 export default userRouter;
