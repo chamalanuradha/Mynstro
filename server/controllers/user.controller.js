@@ -134,279 +134,79 @@ const {userid} = req.userId;
   }
 }
 
-export async function uploadAvatar(req,res){
+export async function getUserById(req, res) {
   try {
-    const {userid} = req.userId;
-    const image = req.file;
+    const { id } = req.params;
 
-    if(!image){
-      return res.status(400).json({
-        message: "No image uploaded",
+    const user = await UserModel.findById(id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
         error: true,
         success: false,
-      })
+      });
     }
-    
 
-  const uploadAvatar = await uploadImageCloudinary(image);
-  const updateAvatar = await UserModel.findOneAndUpdate(userid,{
-    avatar: uploadAvatar.url
-  })
-
-
-
-  return res.status(200).json({
-    message: "Avatar uploaded successfully",
-    error: false,
-    success: true,
-    data: {
-      userid: req.userId,
-      avatar: uploadAvatar.url
-    }
-  })
+    return res.json({
+      message: "User fetched successfully",
+      error: false,
+      success: true,
+      data: user,
+    });
 
   } catch (error) {
     return res.status(500).json({
-      message: error.message || "Error uploading avatar",
+      message: error.message || "Error fetching user",
       error: true,
       success: false,
-    })
-
+    });
   }
 }
 
 export async function updateUser(req, res) {
   try {
-    const { userid } = req.userId;
-    const { name, email, password, mobile } = req.body;
+    const { id } = req.params;
+    const { name, email, mobile, address, role, status } = req.body;
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
-
-    const updateuser = await UserModel.findOneAndUpdate(userid, {
+    const updateData = {
       name,
       email,
-      password : hashedPassword,
       mobile,
-    });
-    const updateduser = await UserModel.findOneAndUpdate(userid);
+      address,
+      role,
+      status,
+    };
 
-    return res.status(200).json({
+    // avatar upload (multer)
+    if (req.file) {
+      updateData.avatar = req.file.path; // or req.file.filename
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found",
+        error: true,
+        success: false,
+      });
+    }
+
+    return res.json({
       message: "User updated successfully",
       error: false,
       success: true,
-      data: updateduser
+      data: updatedUser,
     });
+
   } catch (error) {
     return res.status(500).json({
       message: error.message || "Error updating user",
-      error: true,
-      success: false,
-    
-  })
-}
-}
-
-export async function forgetPassword(req, res) {
-  try {
-    const { email } = req.body;
-    if (!email) {
-      return res.status(400).json({
-        message: "Email is required",
-        error: true,
-        success: false,
-      });
-    }
-    const user = await UserModel.findOne({ email });
-    if (!user) {
-      return res.status(404).json({
-        message: "Email is not found",
-        error: true,
-        success: false,
-      });
-    }
-
-    const forget_password_otp = generateOTP();
-    const forget_password_expiry = new Date + 60 * 60 * 1000;
-
-    const updateuser = await UserModel.findByIdAndUpdate(user._id, {
-      forget_password_otp,
-      forget_password_expiry: new Date(forget_password_expiry).toISOString(),
-    });
-
-    const updateduser = await UserModel.findOne( user._id);
-
-    console.log(updateduser);
-    await sendEmail({
-      sendTo: email,
-      subject: "forgot Password OTP from Mynstro",
-      html: forgotPasswordTemplate({
-        name: updateduser.name,
-        otp: updateduser.forget_password_otp,
-      })
-    });
-
-    return res.status(200).json({
-      message: "Check your email for reset password OTP",
-      error: false,
-      success: true
-    });
-
-   
-    
-
-    
-} catch (error) {
-    return res.status(500).json({
-      message: error.message || "Error sending reset password link",
-      error: true,
-      success: false,
-    });
-  }
-}
-
-export async function verifyOTP(req, res) {
-  try {
-    const { email, otp } = req.body;
-
-    if (!email || !otp) {
-      return res.status(400).json({
-        message: "Email and OTP are required",
-        error: true,
-        success: false,
-      });
-    }
-
-    const user = await UserModel.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({
-        message: "Email is not found",
-        error: true,
-        success: false,
-      });
-    }
-
-    if (user.forget_password_otp !== otp) {
-      return res.status(400).json({
-        message: "Invalid OTP",
-        error: true,
-        success: false,
-      });
-    }
-  
-  return res.status(200).json({
-    message: "OTP verified successfully",
-    error: false,
-    success: true,
-  })
-} catch (error) {
-  return res.status(500).json({
-    message: error.message || "Error verifying OTP",
-    error: true,
-    success: false,
-  });
-}
-}
-
-export async function resetPassword(req, res) {
-  try {
-    const { email, newPassword, confirmPassword } = req.body;
-
-    if(!email || !newPassword || !confirmPassword) {
-      return res.status(400).json({
-        message: "Please fill all the fields",
-        error: true,
-        success: false,
-      })
-    }
-
-    const user = await UserModel.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({
-        message: "Email is not found",
-        error: true,
-        success: false,
-      });
-    }
-
-    if (newPassword !== confirmPassword) {
-      return res.status(400).json({
-        message: "New password and confirm password do not match",
-        error: true,
-        success: false,
-      });
-    }
-
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(newPassword, salt);
-  
-    const update = await UserModel.findOneAndUpdate (usee._id,{
-      password: hashedPassword
-    })
-
-
-    return res.status(200).json({
-      message: "Password reset successfully",
-      error: false,
-      success: true,
-    })
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message || "Error resetting password",
-      error: true,
-      success: false,
-    });
-  }
-}
-
-export async function refreshToken(req, res) {
-  try {
-    const refreshToken = req.cookies.refreshToken || req.headers?.authorization?.split(" ")[1];
-
-    if (!refreshToken) {
-      return res.status(401).json({
-        message: "Refresh token is required",
-        error: true,
-        success: false,
-      });
-    }
-
-    const verifyToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-
-    if (!verifyToken || !verifyToken.userId) {
-      return res.status(401).json({
-        message: "Invalid refresh token",
-        error: true,
-        success: false,
-      });
-    }
-
-    const user = verifyToken.userId;  
-    console.log("User ID from token:", user); 
-
-    const newAccessToken = await genarateAccessToken(user);  
-    const cookiesOption = {
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-    };
-
-    res.cookie('accessToken', newAccessToken, cookiesOption);
-
-    return res.status(200).json({
-      message: "Token refreshed successfully",
-      error: false,
-      success: true,
-      data: {
-        accessToken: newAccessToken, 
-      }
-    });
-
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message || "Error refreshing token",
       error: true,
       success: false,
     });

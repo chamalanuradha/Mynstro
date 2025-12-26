@@ -57,7 +57,7 @@ export default function App() {
         <Route path="/admin/disscounts" element={<Disscountpage />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/adduser" element={<AddUser />} />
-        <Route path="/admin/updateuser/:userId" element={<UpdateUser />} />
+        <Route path="/admin/updateuser/:id" element={<UpdateUser />} />
 
       </Route>
 
