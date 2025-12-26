@@ -6,7 +6,7 @@ dotenv.config();
 
 export async function registerUser(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -29,7 +29,7 @@ export async function registerUser(req, res) {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    const newUser = new UserModel({ name, email, password: hashedPassword });
+    const newUser = new UserModel({ name, email, password: hashedPassword , role });
     const save = await newUser.save();   
 
     return res.json({

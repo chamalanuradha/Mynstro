@@ -1,7 +1,10 @@
 import UserCard from "../../components/usercard.jsx";
+import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Users() {
 
+  const navigate = useNavigate();
 
   const users = [
     {
@@ -58,10 +61,16 @@ export default function Users() {
 
   return (
     <div className="container mx-auto px-4 py-4">
-      <div className=" mx-auto bg-white text-4xl font-bold">
-        <h1>Users</h1>
-      </div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-4xl font-bold">Users</h1>
 
+        <button 
+        onClick={() => navigate('/admin/adduser')}
+        className="flex items-center gap-2 bg-[#F4A261] font-bold px-4 py-2 rounded-md hover:opacity-90">
+          <Plus size={18} />
+          Add User
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {users.map((user) => (

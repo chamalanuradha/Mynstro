@@ -22,6 +22,7 @@ import Product from "./pages/admin/productpage";
 import Offerspage from "./pages/admin/offerspage";
 import Disscountpage from "./pages/admin/disscountpage";
 import Settings from "./pages/admin/settingspage";
+import AddUser from "./pages/admin/adduser";
 
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="/admin/offers" element={<Offerspage />} />
         <Route path="/admin/disscounts" element={<Disscountpage />} />
         <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/adduser" element={<AddUser />} />
 
       </Route>
 
