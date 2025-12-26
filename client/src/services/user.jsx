@@ -48,3 +48,32 @@ export async function loginUser({ email, password }) {
     };
   }
 }
+
+export const getUserById = async (userId) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const res = await axios.get(`${API_URL}/users/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};
+
+// Update user
+export const updateUser = async (userId, formData) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const res = await axios.put(
+    `${API_URL}/users/${userId}`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return res.data;
+}
