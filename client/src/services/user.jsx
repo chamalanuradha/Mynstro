@@ -1,9 +1,10 @@
 const API_URL = "http://localhost:5000/api/user";
+const token = localStorage.getItem("token")
 
-/* =========================
-   REGISTER
-   ========================= */
 export async function registerUser(formData) {
+
+;
+
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
     headers: {
@@ -26,9 +27,6 @@ export async function registerUser(formData) {
   return data;
 }
 
-/* =========================
-   LOGIN
-   ========================= */
 export async function loginUser({ email, password }) {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
@@ -42,10 +40,23 @@ export async function loginUser({ email, password }) {
   return response.json();
 }
 
+export async function getAllUsers() {
+  
+  const response = await fetch(`${API_URL}/allusers`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch users");
+  }
+  return data;
+}
 
 export async function getUserById(userId) {
-  const token = JSON.parse(localStorage.getItem("token"));
-
   const response = await fetch(`${API_URL}/${userId}`, {
     method: "GET",
     headers: {

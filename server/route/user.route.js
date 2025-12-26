@@ -3,11 +3,13 @@ import {
   registerUser,
   login,
   logout,
+  getAllUsers,
   getUserById,
   updateUser,
 } from "../controllers/user.controller.js";
 import auth from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
+import { use } from "react";
 
 const userRouter = Router();
 
@@ -17,7 +19,7 @@ userRouter.post("/login", login);
 userRouter.get("/logout", auth, logout);
 
 
-
+userRouter.get("/allusers", auth, getAllUsers);
 userRouter.get("/:id", auth, getUserById);
 
 
