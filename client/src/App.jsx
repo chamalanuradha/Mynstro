@@ -24,13 +24,13 @@ import Disscountpage from "./pages/admin/disscountpage";
 import Settings from "./pages/admin/settingspage";
 import AddUser from "./pages/admin/adduser";
 import UpdateUser from "./pages/admin/updateuser";
+import AddProduct from "./pages/admin/addproduct";
 
 
 export default function App() {
   return (
     <Routes>
 
-  
       <Route element={<UserLayout />}>
         <Route path="/" element={<Landing />} />
         <Route path="/beauty" element={<Beauty />} />
@@ -49,7 +49,7 @@ export default function App() {
       <Route path="/register" element={<RegisterPage />} />
 
     
-      <Route element={<AdminLayout />}>
+         <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<Admindashboard />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/products" element={<Product />} />
@@ -58,11 +58,9 @@ export default function App() {
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/adduser" element={<AddUser />} />
         <Route path="/admin/updateuser/:id" element={<UpdateUser />} />
-
-      </Route>
-
-
-      <Route path="*" element={<div>404 Not Found</div>} />
+        <Route path="/admin/addproduct" element={<AddProduct />} />
+        <Route path="*" element={<div>404 Not Found</div>} />
+    </Route>
 
     </Routes>
   );

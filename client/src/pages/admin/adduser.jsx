@@ -75,7 +75,7 @@ function AddUser() {
   return (
     <div className="container mx-auto mt-15 justify-center flex items-center ">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        <h2 className="text-2xl text-center font-bold mb-6">User Form</h2>
+        <h2 className="text-2xl text-center font-bold mb-6">Add User</h2>
 
         {message && (
           <div
