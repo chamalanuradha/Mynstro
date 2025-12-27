@@ -93,3 +93,21 @@ export async function updateUser(userId, formData) {
 
   return data;
 }
+
+export async function userDelete(userId) {
+
+  const response = await fetch(`${API_URL}/delete/${userId}`, {
+    method: "DELETE",
+    headers: {  
+      Authorization: `Bearer ${token}`,
+   
+    }, 
+  });
+
+  const data = await response.json(); 
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete user");
+  }
+
+  return data;
+}

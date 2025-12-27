@@ -1,10 +1,27 @@
 import React from "react";
 import { Pencil, Trash2 } from "lucide-react"; 
 import { useNavigate } from "react-router-dom";
+import {userDelete} from "../services/user"
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, onDelete  }) {
 
   const navigate = useNavigate();
+
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      userDelete(user._id)
+        .then(() => {
+          alert("User deleted successfully");
+          if (onDelete) onDelete(user._id);
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Failed to delete user");
+        });
+   
+    }
+  };
+
 
   return (
     <div className="relative bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden p-4">
@@ -65,6 +82,7 @@ export default function UserCard({ user }) {
         </button>
 
         <button
+        onClick={handleDelete}
           className="p-2 rounded-full bg-[#F4A261] text-black-600 hover:bg-red-200 transition"
           title="Delete"
         >

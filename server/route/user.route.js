@@ -6,6 +6,7 @@ import {
   getAllUsers,
   getUserById,
   updateUser,
+  deleteUser
 } from "../controllers/user.controller.js";
 import auth from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
@@ -23,11 +24,9 @@ userRouter.get("/allusers", auth, getAllUsers);
 userRouter.get("/:id", auth, getUserById);
 
 
-userRouter.put(
-  "/:id",
-  auth,
-  upload.single("avatar"),
-  updateUser
-);
+
+userRouter.put("/:id",auth,upload.single("avatar"),updateUser);
+
+userRouter.delete("/delete/:id",auth,deleteUser);
 
 export default userRouter;
