@@ -1,4 +1,4 @@
-import UserModel from "../models/user.model.js";
+import UserModel from "../models/usermodel.js";
 import bcryptjs from "bcryptjs";
 import dotenv from 'dotenv';
 import { generateToken } from "../utils/jwt.js";
