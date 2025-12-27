@@ -12,7 +12,7 @@ export default function UserCard({ user }) {
     
       <span
         className={`absolute top-3 right-3 text-xs px-3 py-1 rounded-full font-semibold ${
-          user.status === "active"
+          user.status === "Active"
             ? "bg-green-100 text-green-700"
             : "bg-red-100 text-red-700"
         }`}

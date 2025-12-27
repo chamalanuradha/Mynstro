@@ -10,7 +10,7 @@ function AddUser() {
     name: "",
     email: "",
     password: "",
-    role: "",
+    role: "USER",
 
   });
 
@@ -32,7 +32,7 @@ function AddUser() {
       name: "",
       email: "",
       password: "",
-      role: "",
+      role: "USER",
     });
   };
 

@@ -75,7 +75,6 @@ export async function getUserById(userId) {
 
 
 export async function updateUser(userId, formData) {
-  const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await fetch(`${API_URL}/${userId}`, {
     method: "PUT",

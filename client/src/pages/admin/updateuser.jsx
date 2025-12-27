@@ -42,12 +42,12 @@ export default function UserUpdate() {
 
    console.log(formData);
 
-  // Handle input change
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle avatar change
+
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -56,7 +56,7 @@ export default function UserUpdate() {
     }
   };
 
-  // Handle update submit
+
   const handleUpdate = async () => {
     try {
       const data = new FormData();
@@ -67,7 +67,7 @@ export default function UserUpdate() {
       await updateUser(id, data);
 
       alert("User updated successfully!");
-      navigate("/users");
+      navigate("/admin/users");
     } catch (err) {
       console.error(err.message);
       alert(err.message);
@@ -173,10 +173,14 @@ export default function UserUpdate() {
 
   
         <div className="flex justify-end gap-3 mt-6">
-          <button className="px-5 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+          <button 
+          onClick={() => navigate("/admin/users")}
+          className="px-5 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
             Cancel
           </button>
-          <button className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button 
+          onClick={handleUpdate}
+          className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
             Update
           </button>
         </div>
