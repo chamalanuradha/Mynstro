@@ -1,7 +1,10 @@
 import ProductCard from "../../components/productcard";
+import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Product() {
 
+  const navigate = useNavigate();
 
   const products = [
     {
@@ -52,8 +55,16 @@ export default function Product() {
 
   return (
     <div className="container mx-auto px-4 py-4">
-      <div className=" mx-auto bg-white text-4xl font-bold">
-        <h1>Products</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-4xl font-bold">Product</h1>
+
+        <button 
+          onClick={() => navigate('/admin/addproduct')}
+          className="flex items-center gap-2 bg-[#F4A261] font-bold px-4 py-2 rounded-md hover:opacity-90"
+        >
+          <Plus size={18} />
+          Add Product
+        </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

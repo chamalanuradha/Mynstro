@@ -3,7 +3,7 @@ const token = localStorage.getItem("token")
 
 export async function registerUser(formData) {
 
-  const response = await fetch(`${API_URL}/user/register`, {
+  const response = await fetch(`${API_URL}user/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export async function registerUser(formData) {
 }
 
 export async function loginUser({ email, password }) {
-  const response = await fetch(`${API_URL}/user/login`, {
+  const response = await fetch(`${API_URL}user/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export async function loginUser({ email, password }) {
 
 export async function getAllUsers() {
   
-  const response = await fetch(`${API_URL}/user/allusers`, {
+  const response = await fetch(`${API_URL}user/allusers`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ export async function getUserById(userId) {
 
 export async function updateUser(userId, formData) {
 
-  const response = await fetch(`${API_URL}/user/${userId}`, {
+  const response = await fetch(`${API_URL}user/${userId}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ export async function updateUser(userId, formData) {
 
 export async function userDelete(userId) {
 
-  const response = await fetch(`${API_URL}/user/delete/${userId}`, {
+  const response = await fetch(`${API_URL}user/delete/${userId}`, {
     method: "DELETE",
     headers: {  
       Authorization: `Bearer ${token}`,
