@@ -6,7 +6,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import conectDB from './config/conectDB.js';
 import cookieParser from "cookie-parser";
-import userRouter from './route/user.route.js';
+import userRouter from './route/userroute.js';
+import productRouter from './route/productroute.js';
 dotenv.config();
 
 const app = express();
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRouter);
+app.use('/api/product', productRouter);
 
 conectDB().then(() => {
     const PORT = process.env.PORT || 5000;
