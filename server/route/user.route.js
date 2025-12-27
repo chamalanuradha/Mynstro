@@ -7,7 +7,7 @@ import {
   getUserById,
   updateUser,
   deleteUser
-} from "../controllers/user.controller.js";
+} from "../controllers/usercontroller.js";
 import auth from "../middleware/auth.js";
 import upload from "../middleware/multer.js";
 import { use } from "react";
